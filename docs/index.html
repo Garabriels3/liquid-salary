@@ -2,13 +2,24 @@
 <html lang="en" data-critters-container>
 <head>
   <meta charset="utf-8">
-  <title>Calculadora de Salário Líquido</title>
+  <title>Liquid Salary</title>
   <base href="/liquid-salary/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
 <style>@charset "UTF-8";body{font-family:Helvetica Neue,Helvetica,Arial,sans-serif;background-color:#f8f9fa;color:#212529;line-height:1.6;margin:0;padding:0}</style><link rel="stylesheet" href="styles.8e570fb26ebdc7c7.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.8e570fb26ebdc7c7.css"></noscript></head>
 <body>
   <app-root></app-root>
-<script src="runtime.2a8683941f8bd613.js" type="module"></script><script src="polyfills.2993d7b5e8825197.js" type="module"></script><script src="main.c903cf6b25956e89.js" type="module"></script></body>
+<script src="runtime.2a8683941f8bd613.js" type="module"></script><script src="polyfills.2993d7b5e8825197.js" type="module"></script><script src="main.4e3bf80801e42173.js" type="module"></script></body>
 </html>
