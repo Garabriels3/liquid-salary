@@ -1,0 +1,58 @@
+@import '../styles.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-header {
+  background-color: $cor-primaria;
+  padding: 1rem 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+
+    li {
+      a {
+        color: #fff;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+main {
+  flex: 1;
+}
+
+.main-footer {
+  background-color: $cor-fundo;
+  color: $cor-texto;
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid darken($cor-fundo, 10%);
+}
