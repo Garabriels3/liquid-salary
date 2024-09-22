@@ -6,4 +6,7 @@ export interface Salario {
     irrf: number;
     outrosDescontos: number;
   };
+  beneficios: {
+    outrosBeneficios: number;
+  };
 }

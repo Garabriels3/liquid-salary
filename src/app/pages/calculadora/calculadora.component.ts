@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-calculadora',
-  standalone: true,
-  imports: [],
   templateUrl: './calculadora.component.html',
-  styleUrl: './calculadora.component.scss'
+  styleUrls: ['./calculadora.component.scss']
 })
 export class CalculadoraComponent {
-
+  // Lógica do componente aqui
 }

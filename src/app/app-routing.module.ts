@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { CalculadoraComponent } from './pages/calculadora/calculadora.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'calculadora', component: CalculadoraComponent },
+  { path: 'calculadora', loadComponent: () => import('./pages/calculadora/calculadora.component').then(m => m.CalculadoraComponent) },
   { path: '**', redirectTo: '' }
 ];
 
