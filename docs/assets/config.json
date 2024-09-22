@@ -1,0 +1,11 @@
+{
+  "firebaseConfig": {
+    "apiKey": "AIzaSyBQmLHymOC0k9drhUvPORNp80sLVikmq98",
+    "authDomain": "liquid-salary.firebaseapp.com",
+    "projectId": "liquid-salary",
+    "storageBucket": "liquid-salary.appspot.com",
+    "messagingSenderId": "715020667433",
+    "appId": "1:715020667433:web:db6a748f5d934683edaa38",
+    "measurementId": "G-46NXFMJSGT"
+  }
+}

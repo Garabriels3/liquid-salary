@@ -1,23 +1,30 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ConfigService } from './services/config.service';
+import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/compat/analytics';
-import { environment } from '../environments/environment';
+import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
+export function initializeApp(configService: ConfigService) {
+  return () => configService.loadConfig();
+}
 
 @NgModule({
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAnalyticsModule,
-    AppComponent,
-    HomeComponent
+    HttpClientModule,
+    RouterModule.forRoot([]),
+    AngularFireModule,
+    AngularFireAnalyticsModule
   ],
   providers: [
-    ScreenTrackingService,
-    UserTrackingService
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigService],
+      multi: true
+    }
   ]
 })
 export class AppModule { }
