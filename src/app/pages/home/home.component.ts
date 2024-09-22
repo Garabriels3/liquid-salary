@@ -9,7 +9,7 @@ import { MoneyFormatPipe } from '../../pipes/money-format.pipe';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective, MoneyFormatPipe],
+  imports: [CommonModule, ReactiveFormsModule, MoneyFormatPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [provideNgxMask()]
