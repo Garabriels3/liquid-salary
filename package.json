@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run pre-build && ng build --configuration production && npm run post-build",
+    "build": "ng build --configuration production --base-href /liquid-salary/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:liquid-salary": "node dist/liquid-salary/server/server.mjs",

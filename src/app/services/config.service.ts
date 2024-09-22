@@ -1,9 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
-import { AngularFireModule } from '@angular/fire/compat';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +6,30 @@ import { getAnalytics } from 'firebase/analytics';
 export class ConfigService {
   private config: any;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   async loadConfig() {
-    this.config = await firstValueFrom(this.http.get('/assets/config.json'));
-    AngularFireModule.initializeApp(this.config.firebaseConfig);
-
-    // Inicializa o Firebase e o Analytics
-    const app = initializeApp(this.config.firebaseConfig);
-    getAnalytics(app);
+    try {
+      const response = await fetch('/assets/config.json');
+      this.config = await response.json();
+    } catch (error) {
+      console.error('Erro ao carregar a configuração:', error);
+      this.config = {
+        firebaseConfig: {
+          // Coloque aqui as configurações padrão do Firebase
+          apiKey: "AIzaSyBQmLHymOC0k9drhUvPORNp80sLVikmq98",
+          authDomain: "liquid-salary.firebaseapp.com",
+          projectId: "liquid-salary",
+          storageBucket: "liquid-salary.appspot.com",
+          messagingSenderId: "715020667433",
+          appId: "1:715020667433:web:db6a748f5d934683edaa38",
+          measurementId: "G-46NXFMJSGT"
+        }
+      };
+    }
   }
 
   getFirebaseConfig() {
-    return this.config.firebaseConfig;
+    return this.config?.firebaseConfig;
   }
 }
