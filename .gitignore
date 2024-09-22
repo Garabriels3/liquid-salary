@@ -49,4 +49,7 @@ Thumbs.db
 # Environment files
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
-/src/assets/config.json
+
+# Ignore both development and production config files
+src/assets/config.json
+docs/assets/config.json

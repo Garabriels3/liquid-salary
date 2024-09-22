@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const configPath = path.join(__dirname, 'src', 'assets', 'config.json');
+const srcConfigPath = path.join(__dirname, 'src', 'assets', 'config.json');
 
-// Restaura o config.json original
-fs.copyFileSync(configPath + '.bak', configPath);
-fs.unlinkSync(configPath + '.bak');
+// Restaura o config.json original em src
+if (fs.existsSync(srcConfigPath + '.bak')) {
+  fs.copyFileSync(srcConfigPath + '.bak', srcConfigPath);
+  fs.unlinkSync(srcConfigPath + '.bak');
+}
 
 console.log('Configuração original restaurada.');
