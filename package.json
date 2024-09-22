@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production --base-href /nome-do-repositorio/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:liquid-salary": "node dist/liquid-salary/server/server.mjs"
