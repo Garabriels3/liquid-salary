@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CalculoSalarioService } from '../../services/calculo-salario.service';
 import { Salario } from '../../models/salario.model';
@@ -23,7 +24,8 @@ export class HomeComponent {
 
   constructor(
     private fb: FormBuilder,
-    private calculoSalarioService: CalculoSalarioService
+    private calculoSalarioService: CalculoSalarioService,
+    private analytics: AngularFireAnalytics
   ) {
     this.salarioForm = this.fb.group({
       salarioBruto: ['', [Validators.required, Validators.min(0)]],
@@ -31,6 +33,8 @@ export class HomeComponent {
       outrosBeneficios: ['', [Validators.min(0)]],
       outrosDescontos: ['', [Validators.min(0)]]
     });
+
+    this.analytics.logEvent('page_view', { page_name: 'home' });
   }
 
   calcularSalario() {
@@ -44,7 +48,19 @@ export class HomeComponent {
       this.faixaINSS = this.calculoSalarioService.getFaixaINSS(salarioBruto);
       this.faixaIRRF = this.calculoSalarioService.getFaixaIRRF(salarioBruto - this.resultado.descontos.inss);
 
-      console.log('Resultado:', this.resultado);
+      this.analytics.logEvent('calculo_realizado', {
+        salario_bruto: salarioBruto,
+        numero_dependentes: numeroDependentes,
+        outros_beneficios: outrosBeneficios,
+        outros_descontos: outrosDescontos,
+        faixa_inss: this.faixaINSS,
+        faixa_irrf: this.faixaIRRF
+      });
+    } else {
+      this.analytics.logEvent('erro_calculo', {
+        erro: 'Formulário inválido',
+        campos_invalidos: this.getInvalidFields()
+      });
     }
   }
 
@@ -64,6 +80,7 @@ export class HomeComponent {
       });
       // Atualiza o valor no formulário
       this.salarioForm.get(campo)?.setValue(valorFormatado, { emitEvent: false });
+      this.analytics.logEvent('campo_formatado', { campo: campo });
     }
   }
 
@@ -74,6 +91,29 @@ export class HomeComponent {
     const numericValue = value.replace(/\D/g, '');
     // Converte para número e divide por 100 para considerar os centavos
     return parseFloat(numericValue) / 100;
+  }
+
+  getInvalidFields(): string[] {
+    const invalidFields = [];
+    for (const field in this.salarioForm.controls) {
+      if (this.salarioForm.get(field)?.invalid) {
+        invalidFields.push(field);
+      }
+    }
+    return invalidFields;
+  }
+
+  // Adicione esses métodos para rastrear interações do usuário
+  onFocusField(fieldName: string) {
+    this.analytics.logEvent('campo_focado', { campo: fieldName });
+  }
+
+  onBlurField(fieldName: string) {
+    this.analytics.logEvent('campo_desfocado', { campo: fieldName });
+  }
+
+  onInfoHover(infoType: string) {
+    this.analytics.logEvent('info_hover', { tipo: infoType });
   }
 
   get salarioBruto() { return this.salarioForm.get('salarioBruto'); }

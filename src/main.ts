@@ -1,11 +1,20 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppComponent } from './app/app.component';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
-import { AppRoutingModule } from './app/app-routing.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/compat/analytics';
+import { environment } from './environments/environment';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(AppRoutingModule)
+    importProvidersFrom(
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireAnalyticsModule
+    ),
+    provideRouter(routes),
+    ScreenTrackingService,
+    UserTrackingService
   ]
 }).catch(err => console.error(err));

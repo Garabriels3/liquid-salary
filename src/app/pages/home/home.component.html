@@ -4,47 +4,46 @@
     <p>Descubra quanto você receberá após os descontos</p>
   </header>
 
-  <!-- Anúncio comentado para uso futuro -->
-  <!-- <app-ad-banner adSlot="1234567890"></app-ad-banner> -->
-
   <main>
     <section class="calculator mb-3">
       <form [formGroup]="salarioForm" (ngSubmit)="calcularSalario()">
         <div class="form-group">
-          <label for="salarioBruto">Salário Bruto: <span class="info-tooltip" title="Valor total do seu salário antes dos descontos">[?]</span></label>
+          <label for="salarioBruto">Salário Bruto: <span class="info-tooltip" (mouseenter)="onInfoHover('salario_bruto')" title="Valor total do seu salário antes dos descontos">[?]</span></label>
           <input type="text" id="salarioBruto" formControlName="salarioBruto" class="form-control"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('salarioBruto')"
-                 (blur)="formatarValor('salarioBruto')">
+                 (blur)="formatarValor('salarioBruto'); onBlurField('salarioBruto')"
+                 (focus)="onFocusField('salarioBruto')">
         </div>
 
         <div class="form-group">
-          <label for="numeroDependentes">Número de Dependentes: <span class="info-tooltip" title="Quantidade de dependentes para dedução do Imposto de Renda">[?]</span></label>
-          <input type="number" id="numeroDependentes" formControlName="numeroDependentes" class="form-control" min="0">
+          <label for="numeroDependentes">Número de Dependentes: <span class="info-tooltip" (mouseenter)="onInfoHover('dependentes')" title="Quantidade de dependentes para dedução do Imposto de Renda">[?]</span></label>
+          <input type="number" id="numeroDependentes" formControlName="numeroDependentes" class="form-control" min="0"
+                 (blur)="onBlurField('numeroDependentes')"
+                 (focus)="onFocusField('numeroDependentes')">
         </div>
 
         <div class="form-group">
-          <label for="outrosBeneficios">Outros Benefícios: <span class="info-tooltip" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">[?]</span></label>
+          <label for="outrosBeneficios">Outros Benefícios: <span class="info-tooltip" (mouseenter)="onInfoHover('beneficios')" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">[?]</span></label>
           <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios" class="form-control"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosBeneficios')"
-                 (blur)="formatarValor('outrosBeneficios')">
+                 (blur)="formatarValor('outrosBeneficios'); onBlurField('outrosBeneficios')"
+                 (focus)="onFocusField('outrosBeneficios')">
         </div>
 
         <div class="form-group">
-          <label for="outrosDescontos">Outros Descontos: <span class="info-tooltip" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">[?]</span></label>
+          <label for="outrosDescontos">Outros Descontos: <span class="info-tooltip" (mouseenter)="onInfoHover('descontos')" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">[?]</span></label>
           <input type="text" id="outrosDescontos" formControlName="outrosDescontos" class="form-control"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosDescontos')"
-                 (blur)="formatarValor('outrosDescontos')">
+                 (blur)="formatarValor('outrosDescontos'); onBlurField('outrosDescontos')"
+                 (focus)="onFocusField('outrosDescontos')">
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="salarioForm.invalid">Calcular Salário</button>
       </form>
     </section>
-
-    <!-- Anúncio comentado para uso futuro -->
-    <!-- <app-ad-banner adSlot="0987654321"></app-ad-banner> -->
 
     <section *ngIf="resultado" class="result mb-3">
       <h2>Resultado do Cálculo</h2>
@@ -77,9 +76,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Anúncio comentado para uso futuro -->
-    <!-- <app-ad-banner adSlot="1357924680"></app-ad-banner> -->
 
     <section class="info mb-3">
       <h2>Informações sobre os Descontos</h2>

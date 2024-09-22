@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  template: '<router-outlet></router-outlet>',
-  styleUrls: ['./app.component.scss']
+  imports: [RouterOutlet, HomeComponent],
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
-  // Removemos a propriedade title, pois não é mais necessária
+  // Remova a propriedade title se não estiver sendo usada
 }
