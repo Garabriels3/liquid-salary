@@ -11,16 +11,8 @@
           <label for="salarioBruto">Salário Bruto: <span class="info-tooltip" title="Valor total do seu salário antes dos descontos">[?]</span></label>
           <input type="text" id="salarioBruto" formControlName="salarioBruto" class="form-control"
                  placeholder="R$ 0,00"
-                 mask="separator.2"
-                 thousandSeparator="."
-                 decimalMarker=","
-                 prefix="R$ "
-                 [dropSpecialCharacters]="false"
-                 [allowNegativeNumbers]="false"
-                 [align]="'right'"
-                 [specialCharacters]="[',', '.', 'R', '$', ' ', ',00']"
+                 (input)="formatarValor('salarioBruto')"
                  (blur)="formatarValor('salarioBruto')">
-          <!-- ... (validações) ... -->
         </div>
 
         <div class="form-group">
@@ -32,14 +24,7 @@
           <label for="outrosBeneficios">Outros Benefícios: <span class="info-tooltip" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">[?]</span></label>
           <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios" class="form-control"
                  placeholder="R$ 0,00"
-                 mask="separator.2"
-                 thousandSeparator="."
-                 decimalMarker=","
-                 prefix="R$ "
-                 [dropSpecialCharacters]="false"
-                 [allowNegativeNumbers]="false"
-                 [align]="'right'"
-                 [specialCharacters]="[',', '.', 'R', '$', ' ', ',00']"
+                 (input)="formatarValor('outrosBeneficios')"
                  (blur)="formatarValor('outrosBeneficios')">
         </div>
 
@@ -47,14 +32,7 @@
           <label for="outrosDescontos">Outros Descontos: <span class="info-tooltip" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">[?]</span></label>
           <input type="text" id="outrosDescontos" formControlName="outrosDescontos" class="form-control"
                  placeholder="R$ 0,00"
-                 mask="separator.2"
-                 thousandSeparator="."
-                 decimalMarker=","
-                 prefix="R$ "
-                 [dropSpecialCharacters]="false"
-                 [allowNegativeNumbers]="false"
-                 [align]="'right'"
-                 [specialCharacters]="[',', '.', 'R', '$', ' ', ',00']"
+                 (input)="formatarValor('outrosDescontos')"
                  (blur)="formatarValor('outrosDescontos')">
         </div>
 

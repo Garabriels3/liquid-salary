@@ -28,8 +28,8 @@ export class HomeComponent {
     this.salarioForm = this.fb.group({
       salarioBruto: ['', [Validators.required, Validators.min(0)]],
       numeroDependentes: [0, [Validators.required, Validators.min(0)]],
-      outrosBeneficios: ['0', [Validators.min(0)]],
-      outrosDescontos: ['0', [Validators.min(0)]]
+      outrosBeneficios: ['', [Validators.min(0)]],
+      outrosDescontos: ['', [Validators.min(0)]]
     });
   }
 
@@ -48,27 +48,32 @@ export class HomeComponent {
     }
   }
 
-  parseCurrency(value: string | number): number {
-    if (typeof value === 'number') return value;
-    if (!value) return 0;
-    if (typeof value === 'string') {
-      return parseFloat(value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-    }
-    return 0;
-  }
-
   formatarValor(campo: string) {
-    const valor = this.salarioForm.get(campo)?.value;
+    let valor = this.salarioForm.get(campo)?.value;
     if (valor) {
-      const valorNumerico = this.parseCurrency(valor);
+      // Remove todos os caracteres não numéricos
+      valor = valor.replace(/\D/g, '');
+      // Converte para número
+      let valorNumerico = parseFloat(valor) / 100;
+      // Formata o valor
       const valorFormatado = valorNumerico.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
-      this.salarioForm.get(campo)?.setValue(valorFormatado);
+      // Atualiza o valor no formulário
+      this.salarioForm.get(campo)?.setValue(valorFormatado, { emitEvent: false });
     }
+  }
+
+  parseCurrency(value: string | number): number {
+    if (typeof value === 'number') return value;
+    if (!value) return 0;
+    // Remove todos os caracteres não numéricos
+    const numericValue = value.replace(/\D/g, '');
+    // Converte para número e divide por 100 para considerar os centavos
+    return parseFloat(numericValue) / 100;
   }
 
   get salarioBruto() { return this.salarioForm.get('salarioBruto'); }
