@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { AppComponent } from './app.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig();
@@ -27,7 +28,12 @@ export function initializeApp(configService: ConfigService) {
       useFactory: initializeApp,
       deps: [ConfigService],
       multi: true
+    },
+    {
+      provide: APP_BASE_HREF,
+      useValue: 'https://calculadorasalarioliquido.com.br/'
     }
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

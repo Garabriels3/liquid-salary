@@ -6,18 +6,7 @@
   <base href="/liquid-salary/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script type="text/javascript">
-    (function(l) {
-      if (l.search[1] === '/' ) {
-        var decoded = l.search.slice(1).split('&').map(function(s) {
-          return s.replace(/~and~/g, '&')
-        }).join('?');
-        window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-        );
-      }
-    }(window.location))
-  </script>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <style>@charset "UTF-8";body{font-family:Helvetica Neue,Helvetica,Arial,sans-serif;background-color:#f8f9fa;color:#212529;line-height:1.6;margin:0;padding:0}</style><link rel="stylesheet" href="styles.8e570fb26ebdc7c7.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.8e570fb26ebdc7c7.css"></noscript></head>
 <body>
   <app-root></app-root>
