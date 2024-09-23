@@ -9,7 +9,9 @@
       <h2>Cálculo do Salário</h2>
       <form [formGroup]="salarioForm" (ngSubmit)="calcularSalario()">
         <div class="form-group">
-          <label for="salarioBruto">Salário Bruto <span class="info-tooltip" (mouseenter)="onInfoHover('salario_bruto')" title="Valor total do seu salário antes dos descontos">ⓘ</span></label>
+          <label for="salarioBruto">Salário Bruto <span class="info-tooltip" (mouseenter)="showTooltip($event, 'salario_bruto')" (mouseleave)="hideTooltip()">ⓘ
+            <span class="tooltip-text">Valor total do seu salário antes dos descontos</span>
+          </span></label>
           <input type="text" id="salarioBruto" formControlName="salarioBruto"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('salarioBruto')"
@@ -18,14 +20,18 @@
         </div>
 
         <div class="form-group">
-          <label for="numeroDependentes">Número de Dependentes <span class="info-tooltip" (mouseenter)="onInfoHover('dependentes')" title="Quantidade de dependentes para dedução do Imposto de Renda">ⓘ</span></label>
+          <label for="numeroDependentes">Número de Dependentes <span class="info-tooltip" (mouseenter)="showTooltip($event, 'dependentes')" (mouseleave)="hideTooltip()">ⓘ
+            <span class="tooltip-text">Quantidade de dependentes para dedução do Imposto de Renda</span>
+          </span></label>
           <input type="number" id="numeroDependentes" formControlName="numeroDependentes" min="0"
                  (blur)="onBlurField('numeroDependentes')"
                  (focus)="onFocusField('numeroDependentes')">
         </div>
 
         <div class="form-group">
-          <label for="outrosBeneficios">Outros Benefícios <span class="info-tooltip" (mouseenter)="onInfoHover('beneficios')" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">ⓘ</span></label>
+          <label for="outrosBeneficios">Outros Benefícios <span class="info-tooltip" (mouseenter)="showTooltip($event, 'beneficios')" (mouseleave)="hideTooltip()">ⓘ
+            <span class="tooltip-text">Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)</span>
+          </span></label>
           <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosBeneficios')"
@@ -34,7 +40,9 @@
         </div>
 
         <div class="form-group">
-          <label for="outrosDescontos">Outros Descontos <span class="info-tooltip" (mouseenter)="onInfoHover('descontos')" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">ⓘ</span></label>
+          <label for="outrosDescontos">Outros Descontos <span class="info-tooltip" (mouseenter)="showTooltip($event, 'descontos')" (mouseleave)="hideTooltip()">ⓘ
+            <span class="tooltip-text">Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)</span>
+          </span></label>
           <input type="text" id="outrosDescontos" formControlName="outrosDescontos"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosDescontos')"

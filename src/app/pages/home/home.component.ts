@@ -121,4 +121,17 @@ export class HomeComponent {
   get numeroDependentes() { return this.salarioForm.get('numeroDependentes'); }
   get outrosBeneficios() { return this.salarioForm.get('outrosBeneficios'); }
   get outrosDescontos() { return this.salarioForm.get('outrosDescontos'); }
+
+  // Adicione estes métodos à classe do componente
+  showTooltip(event: MouseEvent, tooltipId: string) {
+    const tooltip = (event.target as HTMLElement).querySelector('.tooltip-text');
+    if (tooltip) {
+      tooltip.classList.add('visible');
+    }
+  }
+
+  hideTooltip() {
+    const visibleTooltips = document.querySelectorAll('.tooltip-text.visible');
+    visibleTooltips.forEach(tooltip => tooltip.classList.remove('visible'));
+  }
 }
