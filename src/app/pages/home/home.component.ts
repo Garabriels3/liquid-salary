@@ -6,11 +6,12 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CalculoSalarioService } from '../../services/calculo-salario.service';
 import { Salario } from '../../models/salario.model';
 import { MoneyFormatPipe } from '../../pipes/money-format.pipe';
+import { AdBannerComponent } from '../../components/ad-banner.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MoneyFormatPipe],
+  imports: [CommonModule, ReactiveFormsModule, MoneyFormatPipe, AdBannerComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [provideNgxMask()]
