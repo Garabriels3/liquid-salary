@@ -1,15 +1,16 @@
-<div class="container">
-  <header class="text-center mt-3 mb-3">
+<div class="page-container">
+  <header class="header">
     <h1>Calculadora de Salário Líquido</h1>
-    <p>Descubra quanto você receberá após os descontos</p>
+    <p class="subtitle">Descubra quanto você receberá após os descontos</p>
   </header>
 
-  <main>
-    <section class="calculator mb-3">
+  <main class="main-content">
+    <section class="calculator-section">
+      <h2>Cálculo do Salário</h2>
       <form [formGroup]="salarioForm" (ngSubmit)="calcularSalario()">
         <div class="form-group">
-          <label for="salarioBruto">Salário Bruto: <span class="info-tooltip" (mouseenter)="onInfoHover('salario_bruto')" title="Valor total do seu salário antes dos descontos">[?]</span></label>
-          <input type="text" id="salarioBruto" formControlName="salarioBruto" class="form-control"
+          <label for="salarioBruto">Salário Bruto <span class="info-tooltip" (mouseenter)="onInfoHover('salario_bruto')" title="Valor total do seu salário antes dos descontos">ⓘ</span></label>
+          <input type="text" id="salarioBruto" formControlName="salarioBruto"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('salarioBruto')"
                  (blur)="formatarValor('salarioBruto'); onBlurField('salarioBruto')"
@@ -17,15 +18,15 @@
         </div>
 
         <div class="form-group">
-          <label for="numeroDependentes">Número de Dependentes: <span class="info-tooltip" (mouseenter)="onInfoHover('dependentes')" title="Quantidade de dependentes para dedução do Imposto de Renda">[?]</span></label>
-          <input type="number" id="numeroDependentes" formControlName="numeroDependentes" class="form-control" min="0"
+          <label for="numeroDependentes">Número de Dependentes <span class="info-tooltip" (mouseenter)="onInfoHover('dependentes')" title="Quantidade de dependentes para dedução do Imposto de Renda">ⓘ</span></label>
+          <input type="number" id="numeroDependentes" formControlName="numeroDependentes" min="0"
                  (blur)="onBlurField('numeroDependentes')"
                  (focus)="onFocusField('numeroDependentes')">
         </div>
 
         <div class="form-group">
-          <label for="outrosBeneficios">Outros Benefícios: <span class="info-tooltip" (mouseenter)="onInfoHover('beneficios')" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">[?]</span></label>
-          <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios" class="form-control"
+          <label for="outrosBeneficios">Outros Benefícios <span class="info-tooltip" (mouseenter)="onInfoHover('beneficios')" title="Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)">ⓘ</span></label>
+          <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosBeneficios')"
                  (blur)="formatarValor('outrosBeneficios'); onBlurField('outrosBeneficios')"
@@ -33,28 +34,28 @@
         </div>
 
         <div class="form-group">
-          <label for="outrosDescontos">Outros Descontos: <span class="info-tooltip" (mouseenter)="onInfoHover('descontos')" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">[?]</span></label>
-          <input type="text" id="outrosDescontos" formControlName="outrosDescontos" class="form-control"
+          <label for="outrosDescontos">Outros Descontos <span class="info-tooltip" (mouseenter)="onInfoHover('descontos')" title="Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)">ⓘ</span></label>
+          <input type="text" id="outrosDescontos" formControlName="outrosDescontos"
                  placeholder="R$ 0,00"
                  (input)="formatarValor('outrosDescontos')"
                  (blur)="formatarValor('outrosDescontos'); onBlurField('outrosDescontos')"
                  (focus)="onFocusField('outrosDescontos')">
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="salarioForm.invalid">Calcular Salário</button>
+        <button type="submit" [disabled]="salarioForm.invalid">Calcular Salário</button>
       </form>
     </section>
 
-    <section *ngIf="resultado" class="result mb-3">
+    <section *ngIf="resultado" class="result-section">
       <h2>Resultado do Cálculo</h2>
       <div class="result-grid">
         <div class="result-item">
           <h3>Salário Bruto</h3>
           <p>{{ resultado.bruto | moneyFormat }}</p>
         </div>
-        <div class="result-item">
+        <div class="result-item highlight">
           <h3>Salário Líquido</h3>
-          <p class="highlight">{{ resultado.liquido | moneyFormat }}</p>
+          <p>{{ resultado.liquido | moneyFormat }}</p>
         </div>
         <div class="result-item">
           <h3>Desconto INSS</h3>
@@ -77,26 +78,26 @@
       </div>
     </section>
 
-    <section class="info mb-3">
+    <section class="info-section">
       <h2>Informações sobre os Descontos</h2>
       <div class="info-grid">
         <div class="info-item">
-          <h3>INSS</h3>
-          <p>O INSS (Instituto Nacional do Seguro Social) é uma contribuição obrigatória que varia de 7,5% a 14% do salário, dependendo da faixa salarial.</p>
+          <h3>INSS (Instituto Nacional do Seguro Social)</h3>
+          <p>O INSS é uma contribuição obrigatória que financia a Previdência Social no Brasil. As alíquotas variam de 7,5% a 14% do salário, dependendo da faixa salarial. Este desconto é aplicado de forma progressiva, ou seja, cada faixa de salário tem uma alíquota específica.</p>
         </div>
         <div class="info-item">
-          <h3>IRRF</h3>
-          <p>O IRRF (Imposto de Renda Retido na Fonte) é calculado sobre o salário após o desconto do INSS. As alíquotas variam de 0% a 27,5%, dependendo da faixa salarial.</p>
+          <h3>IRRF (Imposto de Renda Retido na Fonte)</h3>
+          <p>O IRRF é calculado sobre o salário após o desconto do INSS e outras deduções permitidas. As alíquotas variam de 0% a 27,5%, dependendo da faixa salarial. O cálculo considera também deduções por dependente e outras despesas dedutíveis, como previdência privada e despesas médicas.</p>
         </div>
         <div class="info-item">
           <h3>Outros Descontos</h3>
-          <p>Podem incluir plano de saúde, vale-transporte, contribuição sindical, entre outros descontos específicos do seu contrato de trabalho.</p>
+          <p>Além do INSS e IRRF, outros descontos podem ser aplicados ao salário, como plano de saúde, vale-transporte, contribuição sindical, pensão alimentícia, entre outros. Estes descontos variam de acordo com o contrato de trabalho e situação individual de cada empregado.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="text-center mt-3">
+  <footer class="footer">
     <p>&copy; {{ currentYear }} Calculadora de Salário Líquido. Todos os direitos reservados.</p>
   </footer>
 </div>
