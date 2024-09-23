@@ -1,31 +1,25 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppComponent } from './app/app.component';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AppComponent } from './app/app.component';
+import { ConfigService } from './app/services/config.service';
 import { HomeComponent } from './app/pages/home/home.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 
-const firebaseConfig = {
-  // Coloque sua configuração do Firebase aqui
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
-};
+const configService = new ConfigService();
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    importProvidersFrom(
-      RouterModule.forRoot([
-        { path: '', component: HomeComponent }
-      ]),
-      AngularFireModule.initializeApp(firebaseConfig),
-      AngularFireAnalyticsModule
-    )
-  ]
-}).catch(err => console.error(err));
+configService.loadConfig().then((config) => {
+  bootstrapApplication(AppComponent, {
+    providers: [
+      importProvidersFrom(
+        RouterModule.forRoot([
+          { path: '', component: HomeComponent }
+        ]),
+        AngularFireModule.initializeApp(configService.getFirebaseConfig()),
+        AngularFireAnalyticsModule
+      ),
+      ConfigService
+    ]
+  }).catch(err => console.error('Erro ao inicializar a aplicação:', err));
+}).catch(err => console.error('Falha ao carregar a configuração:', err));
