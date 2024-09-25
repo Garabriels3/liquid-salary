@@ -5,107 +5,382 @@
   </header>
 
   <main class="main-content">
-    <section class="calculator-section">
-      <h2>Cálculo do Salário</h2>
-      <form [formGroup]="salarioForm" (ngSubmit)="calcularSalario()">
-        <div class="form-group">
-          <label for="salarioBruto">Salário Bruto <span class="info-tooltip" (mouseenter)="showTooltip($event, 'salario_bruto')" (mouseleave)="hideTooltip()">ⓘ
-            <span class="tooltip-text">Valor total do seu salário antes dos descontos</span>
-          </span></label>
-          <input type="text" id="salarioBruto" formControlName="salarioBruto"
-                 placeholder="R$ 0,00"
-                 (input)="formatarValor('salarioBruto')"
-                 (blur)="formatarValor('salarioBruto'); onBlurField('salarioBruto')"
-                 (focus)="onFocusField('salarioBruto')">
+    <div class="calculator">
+      <section class="calculator-section">
+        <h2>Cálculo do Salário</h2>
+        <form [formGroup]="salarioForm" (ngSubmit)="calcularSalario()">
+          <div class="form-group">
+            <label for="salarioBruto">Salário Bruto <span class="info-tooltip" (mouseenter)="showTooltip($event, 'salario_bruto')" (mouseleave)="hideTooltip()">ⓘ
+              <span class="tooltip-text">Valor total do seu salário antes dos descontos</span>
+            </span></label>
+            <input type="text" id="salarioBruto" formControlName="salarioBruto"
+                   placeholder="R$ 0,00"
+                   (input)="formatarValor('salarioBruto')"
+                   (blur)="formatarValor('salarioBruto'); onBlurField('salarioBruto')"
+                   (focus)="onFocusField('salarioBruto')">
+          </div>
+
+          <div class="form-group">
+            <label for="numeroDependentes">Número de Dependentes <span class="info-tooltip" (mouseenter)="showTooltip($event, 'dependentes')" (mouseleave)="hideTooltip()">ⓘ
+              <span class="tooltip-text">Quantidade de dependentes para dedução do Imposto de Renda</span>
+            </span></label>
+            <input type="number" id="numeroDependentes" formControlName="numeroDependentes" min="0"
+                   (blur)="onBlurField('numeroDependentes')"
+                   (focus)="onFocusField('numeroDependentes')">
+          </div>
+
+          <div class="form-group">
+            <label for="outrosBeneficios">Outros Benefícios <span class="info-tooltip" (mouseenter)="showTooltip($event, 'beneficios')" (mouseleave)="hideTooltip()">ⓘ
+              <span class="tooltip-text">Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)</span>
+            </span></label>
+            <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios"
+                   placeholder="R$ 0,00"
+                   (input)="formatarValor('outrosBeneficios')"
+                   (blur)="formatarValor('outrosBeneficios'); onBlurField('outrosBeneficios')"
+                   (focus)="onFocusField('outrosBeneficios')">
+          </div>
+
+          <div class="form-group">
+            <label for="outrosDescontos">Outros Descontos <span class="info-tooltip" (mouseenter)="showTooltip($event, 'descontos')" (mouseleave)="hideTooltip()">ⓘ
+              <span class="tooltip-text">Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)</span>
+            </span></label>
+            <input type="text" id="outrosDescontos" formControlName="outrosDescontos"
+                   placeholder="R$ 0,00"
+                   (input)="formatarValor('outrosDescontos')"
+                   (blur)="formatarValor('outrosDescontos'); onBlurField('outrosDescontos')"
+                   (focus)="onFocusField('outrosDescontos')">
+          </div>
+
+          <button type="submit" [disabled]="salarioForm.invalid">Calcular Salário</button>
+        </form>
+      </section>
+
+      <section *ngIf="resultado" class="result-section">
+        <h2>Resultado do Cálculo</h2>
+        <div class="result-grid">
+          <div class="result-item">
+            <h3>Salário Bruto</h3>
+            <p>{{ resultado.bruto | moneyFormat }}</p>
+          </div>
+          <div class="result-item highlight">
+            <h3>Salário Líquido</h3>
+            <p>{{ resultado.liquido | moneyFormat }}</p>
+          </div>
+          <div class="result-item">
+            <h3>Desconto INSS</h3>
+            <p>{{ resultado.descontos.inss | moneyFormat }}</p>
+            <small>Faixa: {{ faixaINSS }}</small>
+          </div>
+          <div class="result-item">
+            <h3>Desconto IRRF</h3>
+            <p>{{ resultado.descontos.irrf | moneyFormat }}</p>
+            <small>Faixa: {{ faixaIRRF }}</small>
+          </div>
+          <div class="result-item">
+            <h3>Outros Descontos</h3>
+            <p>{{ resultado.descontos.outrosDescontos | moneyFormat }}</p>
+          </div>
+          <div class="result-item">
+            <h3>Total de Descontos</h3>
+            <p>{{ (resultado.descontos.inss + resultado.descontos.irrf + resultado.descontos.outrosDescontos) | moneyFormat }}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <article class="financial-guide">
+      <header class="guide-header">
+        <h1 class="main-title">Guia Completo de Finanças Pessoais</h1>
+      </header>
+
+      <section class="guide-section salary-calculation">
+        <h2 class="section-title">Cálculo do Salário Líquido: Passo a Passo</h2>
+        <div class="section-intro">
+          <p>Entender como calcular seu salário líquido é o primeiro passo para um planejamento financeiro eficaz. Vamos detalhar o processo passo a passo.</p>
         </div>
 
-        <div class="form-group">
-          <label for="numeroDependentes">Número de Dependentes <span class="info-tooltip" (mouseenter)="showTooltip($event, 'dependentes')" (mouseleave)="hideTooltip()">ⓘ
-            <span class="tooltip-text">Quantidade de dependentes para dedução do Imposto de Renda</span>
-          </span></label>
-          <input type="number" id="numeroDependentes" formControlName="numeroDependentes" min="0"
-                 (blur)="onBlurField('numeroDependentes')"
-                 (focus)="onFocusField('numeroDependentes')">
+        <div class="calculation-steps">
+          <div class="step-item">
+            <h3 class="step-title">1. Salário Bruto</h3>
+            <p>Comece com o valor total do seu salário antes de qualquer dedução.</p>
+          </div>
+
+          <div class="step-item">
+            <h3 class="step-title">2. Dedução do INSS</h3>
+            <p>Calcule a contribuição ao INSS de acordo com a tabela progressiva:</p>
+            <ul class="step-list">
+              <li>7,5% para salários até R$ 1.320,00</li>
+              <li>9% para a faixa de R$ 1.320,01 até R$ 2.571,29</li>
+              <li>12% para a faixa de R$ 2.571,30 até R$ 3.856,94</li>
+              <li>14% para a faixa de R$ 3.856,95 até R$ 7.507,49</li>
+            </ul>
+            <p class="step-note">Lembre-se: o cálculo é feito por faixa, não sobre o total.</p>
+          </div>
+
+          <div class="step-item">
+            <h3 class="step-title">3. Base de Cálculo para o IR</h3>
+            <p>Subtraia a contribuição do INSS do salário bruto.</p>
+          </div>
+
+          <div class="step-item">
+            <h3 class="step-title">4. Dedução do Imposto de Renda</h3>
+            <p>Aplique a alíquota do IR conforme a tabela:</p>
+            <ul class="step-list">
+              <li>Até R$ 1.903,98: Isento</li>
+              <li>De R$ 1.903,99 até R$ 2.826,65: 7,5%</li>
+              <li>De R$ 2.826,66 até R$ 3.751,05: 15%</li>
+              <li>De R$ 3.751,06 até R$ 4.664,68: 22,5%</li>
+              <li>Acima de R$ 4.664,68: 27,5%</li>
+            </ul>
+            <p class="step-note">Não esqueça de subtrair a parcela a deduzir correspondente à sua faixa.</p>
+          </div>
+
+          <div class="step-item">
+            <h3 class="step-title">5. Outras Deduções</h3>
+            <p>Subtraia outros descontos como:</p>
+            <ul class="step-list">
+              <li>Plano de saúde</li>
+              <li>Vale-transporte</li>
+              <li>Contribuição sindical</li>
+              <li>Pensão alimentícia (se aplicável)</li>
+            </ul>
+          </div>
+
+          <div class="step-item">
+            <h3 class="step-title">6. Cálculo Final</h3>
+            <p>O salário líquido é o resultado da subtração de todas as deduções do salário bruto:</p>
+            <p class="calculation-formula"><strong>Salário Líquido = Salário Bruto - (INSS + IR + Outras Deduções)</strong></p>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="outrosBeneficios">Outros Benefícios <span class="info-tooltip" (mouseenter)="showTooltip($event, 'beneficios')" (mouseleave)="hideTooltip()">ⓘ
-            <span class="tooltip-text">Valor total de outros benefícios não tributáveis (ex: vale-refeição, vale-transporte)</span>
-          </span></label>
-          <input type="text" id="outrosBeneficios" formControlName="outrosBeneficios"
-                 placeholder="R$ 0,00"
-                 (input)="formatarValor('outrosBeneficios')"
-                 (blur)="formatarValor('outrosBeneficios'); onBlurField('outrosBeneficios')"
-                 (focus)="onFocusField('outrosBeneficios')">
+        <div class="example-calculation">
+          <h3 class="sub-title">Exemplo Prático</h3>
+          <p>Vamos calcular o salário líquido para um salário bruto de R$ 4.000,00:</p>
+          <ol class="example-list">
+            <li>Salário Bruto: R$ 4.000,00</li>
+            <li>INSS: R$ 382,28 (soma das alíquotas por faixa)</li>
+            <li>Base para IR: R$ 3.617,72</li>
+            <li>IR: R$ 142,80 (alíquota de 7,5% - parcela a deduzir)</li>
+            <li>Outras deduções (exemplo): R$ 200,00</li>
+            <li>Salário Líquido: R$ 4.000,00 - (R$ 382,28 + R$ 142,80 + R$ 200,00) = R$ 3.274,92</li>
+          </ol>
         </div>
 
-        <div class="form-group">
-          <label for="outrosDescontos">Outros Descontos <span class="info-tooltip" (mouseenter)="showTooltip($event, 'descontos')" (mouseleave)="hideTooltip()">ⓘ
-            <span class="tooltip-text">Outros descontos não obrigatórios (ex: plano de saúde, contribuição sindical)</span>
-          </span></label>
-          <input type="text" id="outrosDescontos" formControlName="outrosDescontos"
-                 placeholder="R$ 0,00"
-                 (input)="formatarValor('outrosDescontos')"
-                 (blur)="formatarValor('outrosDescontos'); onBlurField('outrosDescontos')"
-                 (focus)="onFocusField('outrosDescontos')">
+        <p class="section-conclusion">Lembre-se que este é um cálculo simplificado. Situações específicas, como dependentes ou deduções adicionais, podem alterar o resultado. Para um cálculo preciso, consulte um profissional de contabilidade ou use nossa calculadora online.</p>
+      </section>
+
+      <section class="guide-section inss-section">
+        <h2 class="section-title">INSS: Sua Segurança Previdenciária</h2>
+        <div class="section-content">
+          <div class="text-content">
+            <p>O Instituto Nacional do Seguro Social (INSS) é o alicerce da previdência brasileira, oferecendo proteção financeira em momentos cruciais da vida. Compreender seu funcionamento é essencial para garantir um futuro tranquilo.</p>
+            <p>A contribuição ao INSS não é apenas uma obrigação, mas um investimento no seu bem-estar futuro. As alíquotas são progressivas, variando conforme sua faixa salarial:</p>
+          </div>
+          <div class="table-container">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th>Faixa Salarial</th>
+                  <th>Alíquota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Até R$ 1.320,00</td>
+                  <td>7,5%</td>
+                </tr>
+                <tr>
+                  <td>De R$ 1.320,01 até R$ 2.571,29</td>
+                  <td>9%</td>
+                </tr>
+                <tr>
+                  <td>De R$ 2.571,30 até R$ 3.856,94</td>
+                  <td>12%</td>
+                </tr>
+                <tr>
+                  <td>De R$ 3.856,95 até R$ 7.507,49</td>
+                  <td>14%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h3 class="sub-title">Benefícios que o INSS Proporciona</h3>
+        <ul class="benefit-list">
+          <li><span class="icon">🏖️</span> <strong>Aposentadoria:</strong> Segurança financeira na terceira idade.</li>
+          <li><span class="icon">🏥</span> <strong>Auxílio-doença:</strong> Suporte durante incapacidade temporária.</li>
+          <li><span class="icon">👶</span> <strong>Salário-maternidade:</strong> Apoio às mães trabalhadoras.</li>
+          <li><span class="icon">👪</span> <strong>Pensão por morte:</strong> Amparo aos dependentes.</li>
+          <li><span class="icon">🦺</span> <strong>Auxílio-acidente:</strong> Compensação por sequelas de acidentes.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section ir-section">
+        <h2 class="section-title">Imposto de Renda: Descomplicando sua Declaração</h2>
+        <div class="section-content">
+          <div class="text-content">
+            <p>O Imposto de Renda (IR) é uma obrigação fiscal anual que, quando bem compreendida, pode resultar em benefícios financeiros. Conhecer as faixas de tributação e as possibilidades de dedução é fundamental para otimizar sua declaração.</p>
+            <p>A tabela progressiva do IR determina a alíquota aplicável conforme sua renda:</p>
+          </div>
+          <div class="table-container">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th>Base de Cálculo</th>
+                  <th>Alíquota</th>
+                  <th>Parcela a Deduzir</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Até R$ 1.903,98</td>
+                  <td>Isento</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>De R$ 1.903,99 até R$ 2.826,65</td>
+                  <td>7,5%</td>
+                  <td>R$ 142,80</td>
+                </tr>
+                <tr>
+                  <td>De R$ 2.826,66 até R$ 3.751,05</td>
+                  <td>15%</td>
+                  <td>R$ 354,80</td>
+                </tr>
+                <tr>
+                  <td>De R$ 3.751,06 até R$ 4.664,68</td>
+                  <td>22,5%</td>
+                  <td>R$ 636,13</td>
+                </tr>
+                <tr>
+                  <td>Acima de R$ 4.664,68</td>
+                  <td>27,5%</td>
+                  <td>R$ 869,36</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section planning-section">
+        <h2 class="section-title">Planejamento Financeiro: Construindo seu Futuro</h2>
+        <div class="section-content">
+          <p>O planejamento financeiro é a base para alcançar seus objetivos e garantir estabilidade econômica. Vai além de simplesmente economizar; envolve estratégias inteligentes para fazer seu dinheiro trabalhar por você e construir um futuro financeiro sólido.</p>
+        </div>
+        <h3 class="sub-title">Pilares do Planejamento Financeiro</h3>
+        <div class="pillar-grid">
+          <div class="pillar-item">
+            <span class="pillar-icon">📊</span>
+            <h4>Orçamento</h4>
+            <p>Um orçamento bem estruturado é o primeiro passo para o controle financeiro. Acompanhe detalhadamente suas receitas e despesas.</p>
+            <ul class="pillar-tips">
+              <li>Use aplicativos de controle financeiro para facilitar o acompanhamento</li>
+              <li>Categorize suas despesas para identificar áreas de maior gasto</li>
+              <li>Estabeleça metas mensais de economia</li>
+            </ul>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-icon">💰</span>
+            <h4>Reserva de Emergência</h4>
+            <p>Mantenha um fundo equivalente a 3-6 meses de despesas para imprevistos.</p>
+            <ul class="pillar-tips">
+              <li>Comece com pequenas quantias e aumente gradualmente</li>
+              <li>Mantenha em investimentos de alta liquidez, como poupança ou CDB</li>
+              <li>Revise e ajuste o valor da reserva anualmente</li>
+            </ul>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-icon">📈</span>
+            <h4>Investimentos</h4>
+            <p>Diversifique seus investimentos entre renda fixa e variável, adequando-os ao seu perfil de risco.</p>
+            <ul class="pillar-tips">
+              <li>Estude sobre diferentes tipos de investimentos: ações, fundos, títulos públicos</li>
+              <li>Considere seu horizonte de investimento ao escolher aplicações</li>
+              <li>Rebalanceie sua carteira periodicamente</li>
+            </ul>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-icon">🛡️</span>
+            <h4>Proteção</h4>
+            <p>Considere seguros e planos de previdência para proteger você e sua família.</p>
+            <ul class="pillar-tips">
+              <li>Avalie seguros de vida, saúde e patrimonial</li>
+              <li>Compare diferentes planos de previdência privada</li>
+              <li>Revise suas coberturas anualmente</li>
+            </ul>
+          </div>
+        </div>
+        <h3 class="sub-title">Estratégias Avançadas de Planejamento Financeiro</h3>
+
+        <div class="advanced-tips">
+          <div class="tip-item">
+            <h4>1. Estabeleça Metas Financeiras Claras</h4>
+            <p>Defina objetivos de curto, médio e longo prazo. Seja específico e estabeleça prazos realistas.</p>
+            <ul>
+              <li>Curto prazo: quitar dívidas, criar reserva de emergência</li>
+              <li>Médio prazo: comprar um carro, fazer uma viagem</li>
+              <li>Longo prazo: comprar uma casa, planejar a aposentadoria</li>
+            </ul>
+          </div>
+
+          <div class="tip-item">
+            <h4>2. Adote a Regra 50/30/20</h4>
+            <p>Distribua sua renda da seguinte forma:</p>
+            <ul>
+              <li>50% para necessidades básicas (moradia, alimentação, transporte)</li>
+              <li>30% para desejos (lazer, compras não essenciais)</li>
+              <li>20% para poupança e investimentos</li>
+            </ul>
+          </div>
+
+          <div class="tip-item">
+            <h4>3. Elimine Dívidas Estrategicamente</h4>
+            <p>Priorize o pagamento de dívidas com juros altos, como cartão de crédito e cheque especial.</p>
+            <ul>
+              <li>Use o método da bola de neve: pague a dívida menor primeiro</li>
+              <li>Negocie taxas de juros menores com credores</li>
+              <li>Considere a consolidação de dívidas</li>
+            </ul>
+          </div>
+
+          <div class="tip-item">
+            <h4>4. Diversifique Fontes de Renda</h4>
+            <p>Não dependa apenas do seu salário. Busque formas de aumentar sua renda.</p>
+            <ul>
+              <li>Invista em sua educação para aumentar seu valor no mercado</li>
+              <li>Considere um trabalho freelance ou hobby rentável</li>
+              <li>Explore oportunidades de renda passiva, como aluguel ou dividendos</li>
+            </ul>
+          </div>
+
+          <div class="tip-item">
+            <h4>5. Automatize suas Finanças</h4>
+            <p>Use a tecnologia a seu favor para manter a disciplina financeira.</p>
+            <ul>
+              <li>Configure transferências automáticas para investimentos</li>
+              <li>Use apps para acompanhar gastos e investimentos</li>
+              <li>Ative alertas para vencimento de contas e limites de gastos</li>
+            </ul>
+          </div>
+
+          <div class="tip-item">
+            <h4>6. Revise e Ajuste Regularmente</h4>
+            <p>Seu planejamento financeiro deve ser flexível e adaptável.</p>
+            <ul>
+              <li>Faça uma revisão mensal de seu orçamento e gastos</li>
+              <li>Reavalie seus objetivos financeiros anualmente</li>
+              <li>Ajuste sua estratégia conforme mudanças na vida e na economia</li>
+            </ul>
+          </div>
         </div>
 
-        <button type="submit" [disabled]="salarioForm.invalid">Calcular Salário</button>
-      </form>
-    </section>
+        <p class="section-conclusion">Lembre-se: o planejamento financeiro é um processo contínuo. Com disciplina, conhecimento e estratégias adequadas, você estará no caminho certo para alcançar seus objetivos financeiros e construir um futuro próspero.</p>
+      </section>
+    </article>
 
-    <section *ngIf="resultado" class="result-section">
-      <h2>Resultado do Cálculo</h2>
-      <div class="result-grid">
-        <div class="result-item">
-          <h3>Salário Bruto</h3>
-          <p>{{ resultado.bruto | moneyFormat }}</p>
-        </div>
-        <div class="result-item highlight">
-          <h3>Salário Líquido</h3>
-          <p>{{ resultado.liquido | moneyFormat }}</p>
-        </div>
-        <div class="result-item">
-          <h3>Desconto INSS</h3>
-          <p>{{ resultado.descontos.inss | moneyFormat }}</p>
-          <small>Faixa: {{ faixaINSS }}</small>
-        </div>
-        <div class="result-item">
-          <h3>Desconto IRRF</h3>
-          <p>{{ resultado.descontos.irrf | moneyFormat }}</p>
-          <small>Faixa: {{ faixaIRRF }}</small>
-        </div>
-        <div class="result-item">
-          <h3>Outros Descontos</h3>
-          <p>{{ resultado.descontos.outrosDescontos | moneyFormat }}</p>
-        </div>
-        <div class="result-item">
-          <h3>Total de Descontos</h3>
-          <p>{{ (resultado.descontos.inss + resultado.descontos.irrf + resultado.descontos.outrosDescontos) | moneyFormat }}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="info-section">
-      <h2>Informações sobre os Descontos</h2>
-      <div class="info-grid">
-        <div class="info-item">
-          <h3>INSS (Instituto Nacional do Seguro Social)</h3>
-          <p>O INSS é uma contribuição obrigatória que financia a Previdência Social no Brasil. As alíquotas variam de 7,5% a 14% do salário, dependendo da faixa salarial. Este desconto é aplicado de forma progressiva, ou seja, cada faixa de salário tem uma alíquota específica.</p>
-        </div>
-        <div class="info-item">
-          <h3>IRRF (Imposto de Renda Retido na Fonte)</h3>
-          <p>O IRRF é calculado sobre o salário após o desconto do INSS e outras deduções permitidas. As alíquotas variam de 0% a 27,5%, dependendo da faixa salarial. O cálculo considera também deduções por dependente e outras despesas dedutíveis, como previdência privada e despesas médicas.</p>
-        </div>
-        <div class="info-item">
-          <h3>Outros Descontos</h3>
-          <p>Além do INSS e IRRF, outros descontos podem ser aplicados ao salário, como plano de saúde, vale-transporte, contribuição sindical, pensão alimentícia, entre outros. Estes descontos variam de acordo com o contrato de trabalho e situação individual de cada empregado.</p>
-        </div>
-      </div>
-    </section>
+    <footer class="footer">
+      <p>&copy; {{ currentYear }} Calculadora de Salário Líquido. Todos os direitos reservados.</p>
+    </footer>
   </main>
-
-  <footer class="footer">
-    <p>&copy; {{ currentYear }} Calculadora de Salário Líquido. Todos os direitos reservados.</p>
-  </footer>
 </div>
