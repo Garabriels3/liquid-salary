@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
@@ -7,7 +7,7 @@ import { BlogService } from '../../services/blog.service';
 import { Artigo } from '../../models/artigo.model';
 import { AdBannerComponent } from '../../components/ad-banner.component';
 import { CalculadoraFormComponent } from '../../components/calculadora-form/calculadora-form.component';
-import { Salario } from '../../models/salario.model';
+import { Resultado } from '../../models/resultado.model';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +22,14 @@ import { Salario } from '../../models/salario.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChildren('artigoCard') artigoCards!: QueryList<ElementRef>;
+  
   paisSelecionado: string = 'BR';
   currentYear: number = new Date().getFullYear();
-  resultado: Salario | null = null;
+  resultado: Resultado | null = null;
   artigosDestaque: Artigo[] = [];
+  artigosExpandidos: {[id: string]: boolean} = {};
+  artigoElementos: {[id: string]: ElementRef} = {};
   
   faqs: { pergunta: string; resposta: string; aberto: boolean }[] = [
     {
@@ -75,6 +79,26 @@ export class HomeComponent implements OnInit {
     this.analytics.logEvent('page_view', { page_name: 'home', pais_inicial: this.paisSelecionado });
     this.carregarArtigosDestaque();
   }
+  
+  ngAfterViewInit(): void {
+    // Mapeia os elementos dos artigos para uso no método toggleArtigo
+    this.artigoCards.changes.subscribe(() => {
+      this.mapearElementosArtigos();
+    });
+    
+    // Inicialização inicial
+    setTimeout(() => {
+      this.mapearElementosArtigos();
+    }, 100);
+  }
+  
+  mapearElementosArtigos(): void {
+    this.artigoCards.forEach((cardRef, index) => {
+      if (this.artigosDestaque[index]) {
+        this.artigoElementos[this.artigosDestaque[index].id] = cardRef;
+      }
+    });
+  }
 
   atualizarMetaTagsPorPais(): void {
     let title = '';
@@ -108,7 +132,7 @@ export class HomeComponent implements OnInit {
     this.analytics.logEvent('meta_tags_atualizadas', { pais: this.paisSelecionado });
   }
   
-  onResultadoCalculado(evento: {resultado: any, pais: string}): void {
+  onResultadoCalculado(evento: {resultado: Resultado, pais: string}): void {
     this.resultado = evento.resultado;
     this.paisSelecionado = evento.pais.toUpperCase();
     this.atualizarMetaTagsPorPais();
@@ -127,6 +151,10 @@ export class HomeComponent implements OnInit {
   carregarArtigosDestaque(): void {
     this.blogService.getArtigosDestaque().subscribe(artigos => {
       this.artigosDestaque = artigos;
+      // Inicializa o estado de expansão para cada artigo
+      artigos.forEach(artigo => {
+        this.artigosExpandidos[artigo.id] = false;
+      });
     });
   }
 
@@ -140,5 +168,24 @@ export class HomeComponent implements OnInit {
 
   toggleFaq(index: number): void {
     this.faqs[index].aberto = !this.faqs[index].aberto;
+  }
+  
+  toggleArtigo(id: string): void {
+    this.artigosExpandidos[id] = !this.artigosExpandidos[id];
+    
+    if (this.artigosExpandidos[id]) {
+      this.analytics.logEvent('artigo_expandido', { artigo_id: id });
+      
+      // Aguarda a renderização do DOM após a expansão
+      setTimeout(() => {
+        if (this.artigoElementos[id]) {
+          // Rola até o artigo expandido com suavidade
+          this.artigoElementos[id].nativeElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start'
+          });
+        }
+      }, 150);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Salario } from '../../models/salario.model';
+import { Resultado } from '../../models/resultado.model';
 import { MoneyFormatPipe } from '../../pipes/money-format.pipe';
 import { CalculoSalarioService } from '../../services/calculo-salario.service';
 
@@ -12,7 +12,7 @@ import { CalculoSalarioService } from '../../services/calculo-salario.service';
   styleUrl: './resultado-calculo.component.scss'
 })
 export class ResultadoCalculoComponent implements OnChanges {
-  @Input() resultado: Salario | null = null;
+  @Input() resultado: Resultado | null = null;
   @Input() pais: string = 'BR';
   
   faixaINSS: string = '';

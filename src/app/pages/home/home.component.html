@@ -9,20 +9,27 @@
     </section>
     
     <!-- Calculadora de Salário Componente -->
-    <app-calculadora-form (resultadoCalculado)="onResultadoCalculado($event)"></app-calculadora-form>
+    <section class="calculadora-section">
+      <app-calculadora-form (resultadoCalculado)="onResultadoCalculado($event)"></app-calculadora-form>
+    </section>
     
     <!-- ======= Seção de Artigos Relacionados ======= -->
     <section class="artigos-relacionados" *ngIf="artigosDestaque.length > 0">
       <div class="container">
         <h2>Artigos em Destaque</h2>
         <div class="artigos-grid">
-          <div class="artigo-card" *ngFor="let artigo of artigosDestaque">
+          <div class="artigo-card" *ngFor="let artigo of artigosDestaque" 
+               [class.expandido]="artigosExpandidos[artigo.id]"
+               #artigoCard>
             <div class="artigo-imagem" [style.background-image]="'url(' + artigo.imagemCapa + ')'"></div>
             <div class="artigo-conteudo">
               <span class="artigo-data">{{ formatarData(artigo.dataPublicacao) }}</span>
               <h3>{{ artigo.titulo }}</h3>
-              <div [innerHTML]="artigo.conteudo"></div>
-              <a [routerLink]="['/blog', artigo.slug]" class="artigo-link">Ler artigo completo</a>
+              <p class="artigo-resumo" *ngIf="!artigosExpandidos[artigo.id]">{{ artigo.resumo }}</p>
+              <div class="artigo-texto" *ngIf="artigosExpandidos[artigo.id]" [innerHTML]="artigo.conteudo"></div>
+              <button type="button" class="btn-artigo" (click)="toggleArtigo(artigo.id)">
+                {{ artigosExpandidos[artigo.id] ? 'Fechar artigo' : 'Ler artigo completo' }}
+              </button>
             </div>
           </div>
         </div>
