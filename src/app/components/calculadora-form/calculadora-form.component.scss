@@ -22,12 +22,13 @@ $spacing-md: 0.65rem;    // Reduzido ainda mais
 $spacing-lg: 1rem;       // Reduzido
 $spacing-xl: 1.5rem;     // Reduzido
 
-// Container da calculadora
+// Container da calculadora - Tornando-o mais adaptativo
 .calculadora-container {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: $spacing-md;
+  box-sizing: border-box; // Importante para que padding não aumente a largura
 }
 
 // Abas de países
@@ -35,7 +36,7 @@ $spacing-xl: 1.5rem;     // Reduzido
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: $spacing-md;  // Reduzido
+  margin-bottom: $spacing-md;
   justify-content: center;
   animation: fadeIn 0.5s ease-out;
   
@@ -71,16 +72,19 @@ $spacing-xl: 1.5rem;     // Reduzido
   }
 }
 
-// Container do formulário
+// Container do formulário - Melhorando a adaptabilidade
 .formulario-container {
   background-color: $card-background;
   border-radius: $border-radius;
-  padding: $spacing-lg;  // Reduzido
+  padding: $spacing-lg;
   box-shadow: $shadow-sm;
   border: 1px solid $border-color;
   transition: box-shadow 0.3s ease;
   animation: fadeIn 0.5s ease-out;
-  margin-bottom: $spacing-lg;  // Reduzido
+  margin-bottom: $spacing-lg;
+  box-sizing: border-box; // Importante para que padding não aumente a largura
+  width: 100%;
+  overflow: hidden; // Evita que o conteúdo saia do container
   
   &:hover {
     box-shadow: $shadow-md;
@@ -90,50 +94,63 @@ $spacing-xl: 1.5rem;     // Reduzido
 // Título do formulário
 .form-titulo {
   color: $primary-color;
-  margin-bottom: $spacing-md;  // Reduzido
+  margin-bottom: $spacing-md;
   font-size: 1.5rem;
   font-weight: 600;
   border-bottom: 1px solid $border-color;
   padding-bottom: $spacing-sm;
 }
 
-// Formulário
+// Formulário - Layout adaptativo com grid
 .form-calculadora {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-sm;  // Reduzido ainda mais
+  grid-template-columns: minmax(0, 1fr); // Importante: minmax(0, 1fr) impede overflow
+  gap: $spacing-sm;
+  width: 100%;
+  box-sizing: border-box;
   
   @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-    column-gap: $spacing-md;  // Espaço horizontal entre colunas
-    row-gap: $spacing-sm;     // Espaço vertical entre linhas reduzido
+    grid-template-columns: repeat(2, minmax(0, 1fr)); // Importante: minmax(0, 1fr) impede overflow
+    column-gap: $spacing-md;
+    row-gap: $spacing-sm;
+  }
+
+  // Para telas pequenas, mantém uma coluna
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
   }
 }
 
-// Campos do formulário
+// Campos do formulário - garantindo que respeitam limites do container
 .campo-formulario {
-  margin-bottom: $spacing-sm;  // Reduzido ainda mais
+  margin-bottom: $spacing-sm;
+  width: 100%;
+  box-sizing: border-box; // Garante que o padding fique dentro do elemento
+  min-width: 0; // Permite que elemento seja menor que seu conteúdo
   
   label {
     display: block;
-    margin-bottom: 0.3rem;  // Reduzido ainda mais
+    margin-bottom: 0.3rem;
     font-weight: 500;
     color: $text-color;
     font-size: 1rem;
+    white-space: normal; // Permite quebra de linha se necessário
+    overflow-wrap: break-word; // Quebra palavras longas
   }
   
   input[type="number"],
   input[type="text"],
   select {
     width: 100%;
-    padding: 0.4rem 0.65rem;  // Reduzido
+    padding: 0.4rem 0.65rem;
     border: 1px solid $border-color;
     border-radius: $border-radius;
     background-color: white;
     font-size: 1rem;
     color: $text-color;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    height: 2.25rem;  // Reduzido
+    height: 2.25rem;
+    box-sizing: border-box; // Garante que o padding fique dentro do elemento
     
     &:focus {
       outline: none;
@@ -155,37 +172,47 @@ $spacing-xl: 1.5rem;     // Reduzido
     font-size: 0.85rem;
     margin-top: 0.3rem;
     display: block;
+    word-wrap: break-word; // Garantir que mensagens de erro não causem overflow
   }
 }
 
-// Campos de radio buttons
+// Campos de radio buttons - Melhorando a adaptabilidade
 .campo-radio {
-  margin-bottom: $spacing-sm;  // Reduzido
+  margin-bottom: $spacing-sm;
+  width: 100%;
+  box-sizing: border-box;
   
   .titulo-campo {
     display: block;
-    margin-bottom: 0.3rem;  // Reduzido
+    margin-bottom: 0.3rem;
     font-weight: 500;
     color: $text-color;
     font-size: 1rem;
+    overflow-wrap: break-word; // Quebra palavras longas
   }
   
   .opcoes-radio {
     display: flex;
-    gap: 1rem;  // Aumentado para dar mais espaço entre os radio buttons
+    flex-wrap: wrap; // Permite quebra de linha quando necessário
+    gap: 1rem;
     
     .opcao {
       display: flex;
       align-items: center;
+      margin-bottom: 0.3rem; // Adiciona margem quando quebra em múltiplas linhas
       
       input[type="radio"] {
         margin-right: $spacing-sm;
         transform: scale(1.2);
+        flex-shrink: 0; // Impede que o botão de rádio encolha
       }
       
       label {
         margin-bottom: 0;
         font-size: 1rem;
+        overflow-wrap: break-word; // Quebra palavras longas
+        flex: 1; // Permite que o label ocupe o espaço restante
+        min-width: 0; // Permite que seja menor que o conteúdo
       }
     }
   }
@@ -198,23 +225,26 @@ $spacing-xl: 1.5rem;     // Reduzido
 
 // Botão de calcular
 .botao-container {
-  margin-top: $spacing-md;  // Reduzido
+  margin-top: $spacing-md;
   text-align: center;
   grid-column: 1 / -1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-calcular {
   background-color: $primary-color;
   color: white;
   border: none;
-  padding: 0.4rem $spacing-md;  // Reduzido
+  padding: 0.4rem $spacing-md;
   border-radius: $border-radius;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 200px;
-  height: 2.5rem;  // Reduzido
+  max-width: 100%; // Impede que botão ultrapasse o container
+  height: 2.5rem;
   
   &:hover:not(:disabled) {
     background-color: darken($primary-color, 10%);
@@ -233,7 +263,9 @@ $spacing-xl: 1.5rem;     // Reduzido
 
 // Resultado
 .resultado-container {
-  margin-top: $spacing-md;  // Reduzido
+  margin-top: $spacing-md;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 // Animações
