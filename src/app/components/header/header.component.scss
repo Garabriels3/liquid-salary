@@ -1,0 +1,192 @@
+@import '../../../styles.scss'; // Importar as variáveis globais
+
+.site-header {
+  background-color: $cor-fundo-input;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $cor-primaria;
+    letter-spacing: -0.5px;
+  }
+}
+
+.main-nav {
+  display: flex;
+  
+  @media (max-width: 768px) {
+    display: none; // Esconder em dispositivos móveis
+  }
+  
+  .nav-items {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    li {
+      margin-left: 1.5rem;
+      
+      &:first-child {
+        margin-left: 0;
+      }
+      
+      a {
+        font-size: 1rem;
+        color: $cor-texto;
+        text-decoration: none;
+        padding: 0.5rem 0;
+        font-weight: 500;
+        transition: color 0.2s ease;
+        position: relative;
+        
+        &:hover {
+          color: $cor-primaria;
+        }
+        
+        &.active {
+          color: $cor-primaria;
+          font-weight: 600;
+          
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: $cor-primaria;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Menu de Hambúrguer
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .menu-icon {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background-color: $cor-texto;
+    transition: all 0.3s ease;
+    
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: $cor-texto;
+      transition: all 0.3s ease;
+    }
+    
+    &:before {
+      top: -8px;
+    }
+    
+    &:after {
+      bottom: -8px;
+    }
+  }
+}
+
+// Menu Móvel
+.mobile-menu {
+  display: none;
+  background-color: $cor-fundo-input;
+  padding: 1rem 0;
+  border-top: 1px solid $cor-highlight;
+  
+  @media (max-width: 768px) {
+    display: none;
+    width: 100%;
+    
+    &.active {
+      display: block;
+    }
+  }
+  
+  .mobile-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    li {
+      margin-bottom: 1rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      a {
+        display: block;
+        padding: 0.8rem 0;
+        font-size: 1.2rem;
+        color: $cor-texto;
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid $cor-highlight;
+        transition: color 0.2s ease;
+        
+        &:hover {
+          color: $cor-primaria;
+        }
+      }
+    }
+  }
+}
+
+// Estilo para quando o menu móvel está aberto
+:host-context(body.menu-open) {
+  .menu-toggle {
+    .menu-icon {
+      background-color: transparent;
+      
+      &:before {
+        transform: rotate(45deg);
+        top: 0;
+      }
+      
+      &:after {
+        transform: rotate(-45deg);
+        bottom: 0;
+      }
+    }
+  }
+}

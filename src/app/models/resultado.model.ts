@@ -1,18 +1,8 @@
-export interface Salario {
+export interface Resultado {
   bruto: number;
   liquido: number;
   descontos: {
     [key: string]: number | undefined;
-    inss?: number;
-    irrf?: number;
-    segurancaSocial?: number;
-    irs?: number;
-    lohnsteuer?: number;
-    soli?: number;
-    kirchensteuer?: number;
-    sozialversicherung?: number;
-    subsidioAlimentacaoTributado?: number;
-    outrosDescontos?: number;
   };
   beneficios?: {
     valeRefeicao?: number;
@@ -23,4 +13,4 @@ export interface Salario {
   moeda?: string;
   taxaEfetivaTotal?: number;
   detalhesAdicionais?: { [key: string]: any };
-}
+} 

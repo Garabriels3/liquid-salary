@@ -4,41 +4,51 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: $cor-fundo;
 }
 
 .main-header {
-  background-color: $cor-primaria;
-  padding: 1rem 0;
+  background-color: #ffffff;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid $cor-borda-input;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
   .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   .logo {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
+    color: $cor-primaria;
+    font-size: 1.6rem;
+    font-weight: 700;
     text-decoration: none;
+
+    &:hover {
+       color: darken($cor-primaria, 10%);
+    }
   }
 
-  .nav-links {
-    list-style: none;
+  .main-nav {
     display: flex;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
+    gap: 1.5rem;
 
-    li {
-      a {
-        color: #fff;
-        text-decoration: none;
-        transition: opacity 0.3s ease;
+    a {
+      color: $cor-texto;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
 
-        &:hover {
-          opacity: 0.8;
-        }
+      &:hover,
+      &.active {
+        color: $cor-primaria;
       }
     }
   }
@@ -46,13 +56,53 @@
 
 main {
   flex: 1;
+  padding-top: 60px;
 }
 
 .main-footer {
-  background-color: $cor-fundo;
-  color: $cor-texto;
-  padding: 1rem 0;
+  background-color: darken($cor-fundo, 5%);
+  color: $cor-secundaria;
+  padding: 2rem 1rem;
   text-align: center;
-  margin-top: 2rem;
-  border-top: 1px solid darken($cor-fundo, 10%);
+  border-top: 1px solid $cor-borda-input;
+  font-size: 0.9rem;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: $cor-secundaria;
+      text-decoration: none;
+
+      &:hover {
+        color: $cor-primaria;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
 }

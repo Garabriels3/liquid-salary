@@ -1,0 +1,140 @@
+<div class="container blog-container">
+  <div class="blog-header">
+    <h1>Blog Liquid Salary</h1>
+    <p class="subtitle">Conteúdo exclusivo sobre finanças, salários e tributação internacional</p>
+  </div>
+
+  <!-- Artigo em destaque -->
+  <section class="featured-article" *ngIf="artigosEmDestaque.length > 0">
+    <div class="featured-article-inner" [routerLink]="['/blog', artigosEmDestaque[0].slug]">
+      <div class="featured-image">
+        <img [src]="artigosEmDestaque[0].imagemCapa" [alt]="artigosEmDestaque[0].titulo">
+        <div class="categoria">{{artigosEmDestaque[0].categoria}}</div>
+      </div>
+      <div class="featured-content">
+        <h2>{{artigosEmDestaque[0].titulo}}</h2>
+        <p class="meta">
+          <span class="author">Por {{artigosEmDestaque[0].autor}}</span>
+          <span class="date">{{artigosEmDestaque[0].dataPublicacao | date:'dd/MM/yyyy'}}</span>
+        </p>
+        <p class="excerpt">{{artigosEmDestaque[0].resumo}}</p>
+        <span class="read-more">Ler artigo completo</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="blog-main">
+    <!-- Lista principal de artigos -->
+    <div class="article-list">
+      <article class="article-card" *ngFor="let artigo of artigos" [routerLink]="['/blog', artigo.slug]">
+        <div class="article-image">
+          <img [src]="artigo.imagemCapa" [alt]="artigo.titulo">
+          <div class="categoria">{{artigo.categoria}}</div>
+        </div>
+        <div class="article-content">
+          <h3>{{artigo.titulo}}</h3>
+          <div class="meta">
+            <span class="author">Por {{artigo.autor}}</span>
+            <span class="date">{{artigo.dataPublicacao | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <p class="excerpt">{{artigo.resumo}}</p>
+          <div class="tags" *ngIf="artigo.tags && artigo.tags.length">
+            <span class="tag" *ngFor="let tag of artigo.tags">{{tag}}</span>
+          </div>
+          <span class="read-more">Ler artigo</span>
+        </div>
+      </article>
+
+      <!-- Paginação -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button 
+          [disabled]="currentPage === 1" 
+          class="page-btn" 
+          (click)="changePage(currentPage - 1)">
+          <i class="fas fa-chevron-left"></i> Anterior
+        </button>
+        <div class="page-numbers">
+          <span 
+            *ngFor="let page of getPageArray()" 
+            [class.active]="page === currentPage" 
+            class="page-number"
+            (click)="changePage(page)">
+            {{ page }}
+          </span>
+        </div>
+        <button 
+          [disabled]="currentPage === totalPages" 
+          class="page-btn" 
+          (click)="changePage(currentPage + 1)">
+          Próxima <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+      <!-- Pesquisa -->
+      <div class="sidebar-widget search-widget">
+        <h4>Pesquisar</h4>
+        <div class="search-form">
+          <input type="text" placeholder="Buscar artigos..." [(ngModel)]="searchQuery">
+          <button (click)="searchArticles()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Categorias -->
+      <div class="sidebar-widget categories-widget">
+        <h4>Categorias</h4>
+        <ul class="categories-list">
+          <li *ngFor="let categoria of categorias" 
+              [class.active]="categoriaAtiva === categoria"
+              (click)="filtrarPorCategoria(categoria)">
+            {{categoria}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Artigos Populares -->
+      <div class="sidebar-widget popular-posts-widget">
+        <h4>Artigos Populares</h4>
+        <div class="popular-posts">
+          <div class="popular-post" *ngFor="let artigo of artigosPopulares" [routerLink]="['/blog', artigo.slug]">
+            <div class="post-image">
+              <img [src]="artigo.imagemCapa" [alt]="artigo.titulo">
+            </div>
+            <div class="post-info">
+              <h5>{{artigo.titulo}}</h5>
+              <span class="post-date">{{artigo.dataPublicacao | date:'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags Cloud -->
+      <div class="sidebar-widget tags-widget">
+        <h4>Tags</h4>
+        <div class="tags-cloud">
+          <span 
+            class="tag" 
+            *ngFor="let tag of todasTags" 
+            [class.active]="tagAtiva === tag"
+            (click)="filtrarPorTag(tag)">
+            {{tag}}
+          </span>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="sidebar-widget newsletter-widget">
+        <h4>Newsletter</h4>
+        <p>Receba novidades e dicas sobre trabalho no exterior</p>
+        <form class="newsletter-form" (ngSubmit)="assinarNewsletter()">
+          <input type="email" placeholder="Seu email" [(ngModel)]="emailNewsletter" name="email">
+          <button type="submit">Assinar</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+</div> 

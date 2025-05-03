@@ -1,1 +1,192 @@
-<p>resultado-calculo works!</p>
+<div class="resultado-container" *ngIf="resultado">
+  <div class="card resultado-principal">
+    <div class="card-header">
+      <h2>{{ pais === 'BR' ? 'Brasil' : 
+             pais === 'PT' ? 'Portugal' : 
+             pais === 'DE' ? 'Alemanha' : 
+             pais === 'FR' ? 'França' : 
+             pais === 'CH' ? 'Suíça' : 
+             pais === 'IT' ? 'Itália' : 'Resultado do Cálculo' }}</h2>
+      <div class="card-status" *ngIf="resultado">
+        <span class="status-icon" [class.positivo]="taxaEfetiva < 25" [class.neutro]="taxaEfetiva >= 25 && taxaEfetiva < 35" [class.negativo]="taxaEfetiva >= 35"></span>
+        <span class="taxa-efetiva">{{ taxaEfetiva | number:'1.1-1' }}% de descontos</span>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div class="valores-principais">
+        <div class="valor-item bruto">
+          <div class="label">Salário Bruto</div>
+          <div class="valor">{{ resultado.bruto | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="separador">
+          <div class="linha"></div>
+          <div class="icon">-</div>
+          <div class="linha"></div>
+        </div>
+        
+        <div class="valor-item descontos">
+          <div class="label">Descontos</div>
+          <div class="valor">{{ totalDescontos | moneyFormat:pais }}</div>
+          <div class="taxa" *ngIf="taxaEfetiva">
+            <span>{{ taxaEfetiva | number:'1.1-1' }}% do bruto</span>
+          </div>
+        </div>
+        
+        <div class="separador" *ngIf="totalBeneficios > 0">
+          <div class="linha"></div>
+          <div class="icon">+</div>
+          <div class="linha"></div>
+        </div>
+        
+        <div class="valor-item beneficios" *ngIf="totalBeneficios > 0">
+          <div class="label">Benefícios</div>
+          <div class="valor">{{ totalBeneficios | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="separador">
+          <div class="linha"></div>
+          <div class="icon">=</div>
+          <div class="linha"></div>
+        </div>
+        
+        <div class="valor-item liquido highlight">
+          <div class="label">Salário Líquido</div>
+          <div class="valor">{{ resultado.liquido | moneyFormat:pais }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Detalhes dos descontos - Brasil -->
+  <div class="card detalhes-card" *ngIf="pais === 'BR'">
+    <div class="card-header">
+      <h3>Detalhes dos Descontos</h3>
+    </div>
+    
+    <div class="card-body">
+      <div class="detalhes-grid">
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'inss')">
+          <div class="detalhe-label">INSS</div>
+          <div class="detalhe-valor">{{ resultado.descontos.inss | moneyFormat:pais }}</div>
+          <div class="detalhe-info" *ngIf="faixaINSS">Faixa: {{ faixaINSS }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'irrf')">
+          <div class="detalhe-label">IRRF</div>
+          <div class="detalhe-valor">{{ resultado.descontos.irrf | moneyFormat:pais }}</div>
+          <div class="detalhe-info" *ngIf="faixaIRRF">Faixa: {{ faixaIRRF }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'outrosDescontos')">
+          <div class="detalhe-label">Outros Descontos</div>
+          <div class="detalhe-valor">{{ resultado.descontos.outrosDescontos | moneyFormat:pais }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Detalhes dos descontos - Portugal -->
+  <div class="card detalhes-card" *ngIf="pais === 'PT'">
+    <div class="card-header">
+      <h3>Detalhes dos Descontos</h3>
+    </div>
+    
+    <div class="card-body">
+      <div class="detalhes-grid">
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'segurancaSocial')">
+          <div class="detalhe-label">Segurança Social</div>
+          <div class="detalhe-valor">{{ resultado.descontos.segurancaSocial | moneyFormat:pais }}</div>
+          <div class="detalhe-info">11% do salário bruto</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'irs')">
+          <div class="detalhe-label">IRS</div>
+          <div class="detalhe-valor">{{ resultado.descontos.irs | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'subsidioAlimentacaoTributado')">
+          <div class="detalhe-label">Subsídio Alimentação Tributado</div>
+          <div class="detalhe-valor">{{ resultado.descontos.subsidioAlimentacaoTributado | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'outrosDescontos')">
+          <div class="detalhe-label">Outros Descontos</div>
+          <div class="detalhe-valor">{{ resultado.descontos.outrosDescontos | moneyFormat:pais }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Detalhes dos descontos - Alemanha -->
+  <div class="card detalhes-card" *ngIf="pais === 'DE'">
+    <div class="card-header">
+      <h3>Detalhes dos Descontos</h3>
+    </div>
+    
+    <div class="card-body">
+      <div class="detalhes-grid">
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'lohnsteuer')">
+          <div class="detalhe-label">Lohnsteuer</div>
+          <div class="detalhe-valor">{{ resultado.descontos.lohnsteuer | moneyFormat:pais }}</div>
+          <div class="detalhe-info">Imposto de Renda</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'soli')">
+          <div class="detalhe-label">Solidaritätszuschlag</div>
+          <div class="detalhe-valor">{{ resultado.descontos.soli | moneyFormat:pais }}</div>
+          <div class="detalhe-info">Taxa de Solidariedade</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'kirchensteuer')">
+          <div class="detalhe-label">Kirchensteuer</div>
+          <div class="detalhe-valor">{{ resultado.descontos.kirchensteuer | moneyFormat:pais }}</div>
+          <div class="detalhe-info">Imposto da Igreja</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'sozialversicherung')">
+          <div class="detalhe-label">Sozialversicherung</div>
+          <div class="detalhe-valor">{{ resultado.descontos.sozialversicherung | moneyFormat:pais }}</div>
+          <div class="detalhe-info">Seguro Social</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('descontos', 'outrosDescontos')">
+          <div class="detalhe-label">Outros Descontos</div>
+          <div class="detalhe-valor">{{ resultado.descontos.outrosDescontos | moneyFormat:pais }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Benefícios - Comum para todos os países -->
+  <div class="card beneficios-card" *ngIf="resultado.beneficios && totalBeneficios > 0">
+    <div class="card-header">
+      <h3>Benefícios</h3>
+    </div>
+    
+    <div class="card-body">
+      <div class="detalhes-grid">
+        <div class="detalhe-item" *ngIf="existeValor('beneficios', 'valeRefeicao')">
+          <div class="detalhe-label">Vale Refeição</div>
+          <div class="detalhe-valor">{{ resultado.beneficios.valeRefeicao | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('beneficios', 'valeTransporte')">
+          <div class="detalhe-label">Vale Transporte</div>
+          <div class="detalhe-valor">{{ resultado.beneficios.valeTransporte | moneyFormat:pais }}</div>
+        </div>
+        
+        <div class="detalhe-item" *ngIf="existeValor('beneficios', 'outrosBeneficios')">
+          <div class="detalhe-label">Outros Benefícios</div>
+          <div class="detalhe-valor">{{ resultado.beneficios.outrosBeneficios | moneyFormat:pais }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mensagem de nenhum resultado -->
+<div class="sem-resultado" *ngIf="!resultado">
+  <p>Preencha o formulário e clique em Calcular para ver o resultado.</p>
+</div>

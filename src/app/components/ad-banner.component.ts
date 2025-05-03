@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 // Declare o tipo global para window.adsbygoogle
 declare global {
@@ -19,7 +20,8 @@ declare global {
            data-full-width-responsive="true"></ins>
     </div>
   `,
-  standalone: true
+  standalone: true,
+  imports: [CommonModule]
 })
 export class AdBannerComponent implements OnInit {
   @Input() adClient: string = 'ca-pub-XXXXXXXXXXXXXXXX'; // Substitua pelo seu ID de publicador

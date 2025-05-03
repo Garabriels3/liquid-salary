@@ -1,137 +1,144 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title, Meta } from '@angular/platform-browser';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { CalculoSalarioService } from '../../services/calculo-salario.service';
-import { Salario } from '../../models/salario.model';
-import { MoneyFormatPipe } from '../../pipes/money-format.pipe';
+import { RouterModule } from '@angular/router';
+import { BlogService } from '../../services/blog.service';
+import { Artigo } from '../../models/artigo.model';
 import { AdBannerComponent } from '../../components/ad-banner.component';
+import { CalculadoraFormComponent } from '../../components/calculadora-form/calculadora-form.component';
+import { Salario } from '../../models/salario.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MoneyFormatPipe, AdBannerComponent],
+  imports: [
+    CommonModule,
+    AdBannerComponent,
+    RouterModule,
+    CalculadoraFormComponent
+  ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  providers: [provideNgxMask()]
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  salarioForm: FormGroup;
-  resultado: Salario | null = null;
-  faixaINSS: string = '';
-  faixaIRRF: string = '';
+export class HomeComponent implements OnInit {
+  paisSelecionado: string = 'BR';
   currentYear: number = new Date().getFullYear();
+  resultado: Salario | null = null;
+  artigosDestaque: Artigo[] = [];
+  
+  faqs: { pergunta: string; resposta: string; aberto: boolean }[] = [
+    {
+      pergunta: 'O que é salário líquido?',
+      resposta: 'O salário líquido é o valor que o trabalhador efetivamente recebe após todas as deduções obrigatórias, como INSS, IRRF e outros descontos. É o valor "real" que vai para a conta bancária do trabalhador.',
+      aberto: false
+    },
+    {
+      pergunta: 'Como calcular o INSS corretamente?',
+      resposta: 'O INSS é calculado de forma progressiva, por faixas de salário. Em 2023, existem quatro faixas de contribuição, com alíquotas que variam de 7,5% a 14%. O valor de contribuição é calculado aplicando o percentual correspondente a cada faixa do salário. Nossa calculadora faz esse cálculo automaticamente conforme as regras atualizadas.',
+      aberto: false
+    },
+    {
+      pergunta: 'Quais são os descontos obrigatórios no salário?',
+      resposta: 'Os descontos obrigatórios no salário incluem o INSS (Previdência Social) e o IRRF (Imposto de Renda Retido na Fonte). Dependendo da empresa e da categoria profissional, podem existir outros descontos como contribuição sindical, assistência médica, vale-transporte, entre outros.',
+      aberto: false
+    },
+    {
+      pergunta: 'Vale-transporte e vale-refeição são descontos obrigatórios?',
+      resposta: 'O vale-transporte pode gerar um desconto de até 6% do salário bruto, caso o trabalhador opte por recebê-lo. Já o vale-refeição geralmente não gera descontos, sendo um benefício oferecido pela empresa, mas isso pode variar conforme a política de cada organização.',
+      aberto: false
+    },
+    {
+      pergunta: 'Como funciona o cálculo do Imposto de Renda (IRRF)?',
+      resposta: 'O IRRF é calculado aplicando a alíquota correspondente à faixa salarial (após o desconto do INSS) e subtraindo a dedução específica daquela faixa. Também são consideradas deduções por dependentes (R$ 189,59 por dependente em 2023), pensão alimentícia e outras deduções legais.',
+      aberto: false
+    },
+    {
+      pergunta: 'O que é a Reforma Tributária e como afeta meu salário?',
+      resposta: 'A Reforma Tributária é um conjunto de mudanças nas leis fiscais que visa simplificar o sistema tributário brasileiro. Dependendo das alterações aprovadas, pode haver impactos na forma como os impostos são calculados sobre o salário. É importante se manter atualizado sobre as mudanças para entender como seu salário pode ser afetado.',
+      aberto: false
+    }
+  ];
+  
+  dataAtualizacao: string = '10 de novembro de 2023';
+  autorArtigo: string = 'Equipe Liquid Salary';
 
   constructor(
-    private fb: FormBuilder,
-    private calculoSalarioService: CalculoSalarioService,
-    private analytics: AngularFireAnalytics
-  ) {
-    this.salarioForm = this.fb.group({
-      salarioBruto: ['', [Validators.required, Validators.min(0)]],
-      numeroDependentes: [0, [Validators.required, Validators.min(0)]],
-      outrosBeneficios: ['', [Validators.min(0)]],
-      outrosDescontos: ['', [Validators.min(0)]]
+    private analytics: AngularFireAnalytics,
+    private titleService: Title,
+    private metaService: Meta,
+    private blogService: BlogService
+  ) {}
+
+  ngOnInit(): void {
+    this.atualizarMetaTagsPorPais();
+    this.analytics.logEvent('page_view', { page_name: 'home', pais_inicial: this.paisSelecionado });
+    this.carregarArtigosDestaque();
+  }
+
+  atualizarMetaTagsPorPais(): void {
+    let title = '';
+    let description = '';
+    let keywords = '';
+
+    switch (this.paisSelecionado) {
+      case 'BR':
+        title = `Calculadora Salário Líquido Brasil ${this.currentYear} | INSS, IRRF`;
+        description = `Calcule seu salário líquido no Brasil (${this.currentYear}). Simule descontos de INSS, IRRF e veja o valor final. Ferramenta atualizada.`;
+        keywords = `calculadora salario liquido, brasil, ${this.currentYear}, clt, inss, irrf, desconto salario`;
+        break;
+      case 'PT':
+        title = `Calculadora Salário Líquido Portugal ${this.currentYear} | IRS, SS`;
+        description = `Calcule o seu salário líquido em Portugal (${this.currentYear}). Simulador considera IRS e Segurança Social. Atualizado.`;
+        keywords = `calculadora salario liquido, portugal, ${this.currentYear}, irs, segurança social, ss, ordenado liquido`;
+        break;
+      default:
+        title = `Calculadora Salário Líquido Online | ${this.paisSelecionado}`;
+        description = `Calcule seu salário líquido online para ${this.paisSelecionado}.`;
+        keywords = `calculadora salario liquido, ${this.paisSelecionado}`;
+    }
+
+    this.titleService.setTitle(title);
+    this.metaService.updateTag({ name: 'description', content: description });
+    this.metaService.updateTag({ name: 'keywords', content: keywords });
+    this.metaService.updateTag({ property: 'og:title', content: title });
+    this.metaService.updateTag({ property: 'og:description', content: description });
+    this.metaService.updateTag({ property: 'og:url', content: window.location.href });
+
+    this.analytics.logEvent('meta_tags_atualizadas', { pais: this.paisSelecionado });
+  }
+  
+  onResultadoCalculado(evento: {resultado: any, pais: string}): void {
+    this.resultado = evento.resultado;
+    this.paisSelecionado = evento.pais.toUpperCase();
+    this.atualizarMetaTagsPorPais();
+    
+    // Log para analytics
+    const eventoAnalytics = {
+      moeda: evento.resultado.moeda,
+      salario_bruto: evento.resultado.bruto,
+      salario_liquido: evento.resultado.liquido,
+      pais: this.paisSelecionado
+    };
+    
+    this.analytics.logEvent('calculo_realizado', eventoAnalytics);
+  }
+
+  carregarArtigosDestaque(): void {
+    this.blogService.getArtigosDestaque().subscribe(artigos => {
+      this.artigosDestaque = artigos;
     });
-
-    this.analytics.logEvent('page_view', { page_name: 'home' });
   }
 
-  calcularSalario() {
-    if (this.salarioForm.valid) {
-      const salarioBruto = this.parseCurrency(this.salarioForm.get('salarioBruto')?.value);
-      const numeroDependentes = this.salarioForm.get('numeroDependentes')?.value;
-      const outrosBeneficios = this.parseCurrency(this.salarioForm.get('outrosBeneficios')?.value);
-      const outrosDescontos = this.parseCurrency(this.salarioForm.get('outrosDescontos')?.value);
-
-      this.resultado = this.calculoSalarioService.calcularSalarioLiquido(salarioBruto, numeroDependentes, outrosBeneficios, outrosDescontos);
-      this.faixaINSS = this.calculoSalarioService.getFaixaINSS(salarioBruto);
-      this.faixaIRRF = this.calculoSalarioService.getFaixaIRRF(salarioBruto - this.resultado.descontos.inss);
-
-      this.analytics.logEvent('calculo_realizado', {
-        salario_bruto: salarioBruto,
-        numero_dependentes: numeroDependentes,
-        outros_beneficios: outrosBeneficios,
-        outros_descontos: outrosDescontos,
-        faixa_inss: this.faixaINSS,
-        faixa_irrf: this.faixaIRRF
-      });
-    } else {
-      this.analytics.logEvent('erro_calculo', {
-        erro: 'Formulário inválido',
-        campos_invalidos: this.getInvalidFields()
-      });
-    }
+  formatarData(data: Date): string {
+    const meses = [
+      'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+      'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+    ];
+    return `${data.getDate()} de ${meses[data.getMonth()]} de ${data.getFullYear()}`;
   }
 
-  formatarValor(campo: string) {
-    let valor = this.salarioForm.get(campo)?.value;
-    if (valor) {
-      // Remove todos os caracteres não numéricos
-      valor = valor.replace(/\D/g, '');
-      // Converte para número
-      let valorNumerico = parseFloat(valor) / 100;
-      // Formata o valor
-      const valorFormatado = valorNumerico.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-      // Atualiza o valor no formulário
-      this.salarioForm.get(campo)?.setValue(valorFormatado, { emitEvent: false });
-      this.analytics.logEvent('campo_formatado', { campo: campo });
-    }
-  }
-
-  parseCurrency(value: string | number): number {
-    if (typeof value === 'number') return value;
-    if (!value) return 0;
-    // Remove todos os caracteres não numéricos
-    const numericValue = value.replace(/\D/g, '');
-    // Converte para número e divide por 100 para considerar os centavos
-    return parseFloat(numericValue) / 100;
-  }
-
-  getInvalidFields(): string[] {
-    const invalidFields = [];
-    for (const field in this.salarioForm.controls) {
-      if (this.salarioForm.get(field)?.invalid) {
-        invalidFields.push(field);
-      }
-    }
-    return invalidFields;
-  }
-
-  // Adicione esses métodos para rastrear interações do usuário
-  onFocusField(fieldName: string) {
-    this.analytics.logEvent('campo_focado', { campo: fieldName });
-  }
-
-  onBlurField(fieldName: string) {
-    this.analytics.logEvent('campo_desfocado', { campo: fieldName });
-  }
-
-  onInfoHover(infoType: string) {
-    this.analytics.logEvent('info_hover', { tipo: infoType });
-  }
-
-  get salarioBruto() { return this.salarioForm.get('salarioBruto'); }
-  get numeroDependentes() { return this.salarioForm.get('numeroDependentes'); }
-  get outrosBeneficios() { return this.salarioForm.get('outrosBeneficios'); }
-  get outrosDescontos() { return this.salarioForm.get('outrosDescontos'); }
-
-  // Adicione estes métodos à classe do componente
-  showTooltip(event: MouseEvent, tooltipId: string) {
-    const tooltip = (event.target as HTMLElement).querySelector('.tooltip-text');
-    if (tooltip) {
-      tooltip.classList.add('visible');
-    }
-  }
-
-  hideTooltip() {
-    const visibleTooltips = document.querySelectorAll('.tooltip-text.visible');
-    visibleTooltips.forEach(tooltip => tooltip.classList.remove('visible'));
+  toggleFaq(index: number): void {
+    this.faqs[index].aberto = !this.faqs[index].aberto;
   }
 }

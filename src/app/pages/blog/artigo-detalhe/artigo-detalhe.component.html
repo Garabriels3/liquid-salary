@@ -1,0 +1,131 @@
+<div class="page-container artigo-page">
+  <!-- Carregando -->
+  <div class="loading-container" *ngIf="carregando">
+    <div class="loading-spinner"></div>
+    <p>Carregando artigo...</p>
+  </div>
+
+  <!-- Erro -->
+  <div class="error-container" *ngIf="erro">
+    <h2>Artigo não encontrado</h2>
+    <p>Não foi possível encontrar o artigo solicitado.</p>
+    <a routerLink="/blog" class="btn-voltar">Voltar para o Blog</a>
+  </div>
+
+  <!-- Conteúdo do Artigo -->
+  <div class="artigo-container" *ngIf="!carregando && !erro && artigo">
+    <!-- Cabeçalho do Artigo -->
+    <header class="artigo-header">
+      <div class="artigo-meta">
+        <span class="artigo-categoria" *ngFor="let categoria of artigo.categorias">{{ categoria }}</span>
+        <span class="artigo-data">{{ formatarData(artigo.dataPublicacao) }}</span>
+      </div>
+      <h1 class="artigo-titulo">{{ artigo.titulo }}</h1>
+      <div class="artigo-autor">
+        <span>Por {{ artigo.autor }}</span>
+        <span class="artigo-tempo-leitura">{{ artigo.tempoLeitura }} min de leitura</span>
+      </div>
+    </header>
+
+    <!-- Imagem Principal -->
+    <div class="artigo-imagem">
+      <img [src]="artigo.imagemCapa" [alt]="artigo.titulo">
+    </div>
+
+    <!-- Banner de Anúncio Superior -->
+    <app-ad-banner adSlotId="artigo-top-ad" adFormat="horizontal"></app-ad-banner>
+
+    <!-- Layout Principal do Artigo -->
+    <div class="artigo-layout">
+      <!-- Conteúdo do Artigo -->
+      <main class="artigo-conteudo">
+        <!-- Resumo -->
+        <div class="artigo-resumo">
+          <p>{{ artigo.resumo }}</p>
+        </div>
+
+        <!-- Conteúdo HTML -->
+        <div class="artigo-corpo" [innerHTML]="artigo.conteudo"></div>
+
+        <!-- Banner de Anúncio em Meio ao Conteúdo -->
+        <app-ad-banner adSlotId="artigo-mid-ad" adFormat="horizontal"></app-ad-banner>
+
+        <!-- Tags -->
+        <div class="artigo-tags">
+          <h3>Tags:</h3>
+          <ul class="tag-list">
+            <li *ngFor="let tag of artigo.tags">
+              <a class="tag-item">#{{ tag }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Compartilhamento -->
+        <div class="artigo-compartilhar">
+          <h3>Compartilhe:</h3>
+          <div class="social-buttons">
+            <a href="javascript:void(0)" class="social-button">Facebook</a>
+            <a href="javascript:void(0)" class="social-button">Twitter</a>
+            <a href="javascript:void(0)" class="social-button">LinkedIn</a>
+            <a href="javascript:void(0)" class="social-button">WhatsApp</a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Sidebar do Artigo -->
+      <aside class="artigo-sidebar">
+        <!-- Banner de Anúncio Lateral -->
+        <app-ad-banner adSlotId="artigo-sidebar-ad" adFormat="vertical"></app-ad-banner>
+
+        <!-- Artigos da Mesma Categoria -->
+        <div class="sidebar-widget related-widget">
+          <h3 class="widget-title">Artigos Relacionados</h3>
+          <ul class="related-list">
+            <li *ngFor="let artigo of artigosRelacionados">
+              <a [routerLink]="['/blog', artigo.slug]" class="related-link">
+                <span class="related-title">{{ artigo.titulo }}</span>
+                <span class="related-date">{{ formatarData(artigo.dataPublicacao) }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Calculadora CTA -->
+        <div class="sidebar-widget calculator-cta">
+          <h3>Calcule seu Salário Líquido</h3>
+          <p>Use nossa calculadora para simular seu salário líquido em diferentes países.</p>
+          <a routerLink="/" class="cta-button">Acessar Calculadora</a>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Seção de Artigos Relacionados (Mobile) -->
+    <section class="mobile-related" *ngIf="artigosRelacionados.length > 0">
+      <h2 class="section-title">Artigos Relacionados</h2>
+      <div class="mobile-related-list">
+        <article class="related-card" *ngFor="let artigo of artigosRelacionados">
+          <div class="related-image" [style.background-image]="'url(' + artigo.imagemCapa + ')'"></div>
+          <div class="related-content">
+            <div class="related-meta">
+              <span class="related-category">{{ artigo.categorias[0] }}</span>
+              <span class="related-date">{{ formatarData(artigo.dataPublicacao) }}</span>
+            </div>
+            <h3 class="related-title">
+              <a [routerLink]="['/blog', artigo.slug]">{{ artigo.titulo }}</a>
+            </h3>
+            <a [routerLink]="['/blog', artigo.slug]" class="read-more">Ler artigo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Banner de Anúncio Inferior -->
+    <app-ad-banner adSlotId="artigo-bottom-ad" adFormat="horizontal"></app-ad-banner>
+
+    <!-- Links de Navegação -->
+    <div class="artigo-navegacao">
+      <a routerLink="/blog" class="btn-voltar">Voltar para o Blog</a>
+      <a routerLink="/" class="btn-calculadora">Acessar Calculadora</a>
+    </div>
+  </div>
+</div> 

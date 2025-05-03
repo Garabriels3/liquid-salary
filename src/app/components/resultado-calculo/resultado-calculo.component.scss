@@ -1,0 +1,224 @@
+// Variáveis
+$primary-color: #2a5269;
+$secondary-color: #687e8c;
+$text-color: #263238;
+$light-text: #546e7a;
+$border-color: #b0c0cf;
+$accent-color: #45695a;
+$error-color: #9c3f3a;
+$background-color: #edf1f5;
+$card-background: #f7f9fb;
+$highlight-background: #e7eef5;
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$border-radius: 0.5rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Estilos gerais do componente
+.resultado-card {
+  background-color: $card-background;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-color;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  animation: fadeIn 0.3s ease-out;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  .card-header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border-color;
+    background-color: $background-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      color: $primary-color;
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .card-status {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      .status-icon {
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background-color: #ccc;
+
+        &.positivo {
+          background-color: $accent-color;
+        }
+
+        &.neutro {
+          background-color: $secondary-color;
+        }
+
+        &.negativo {
+          background-color: $error-color;
+        }
+      }
+
+      .taxa-efetiva {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: $light-text;
+      }
+    }
+  }
+
+  .card-content {
+    padding: $spacing-lg;
+  }
+}
+
+// Seção de valores principais
+.valores-principais {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $border-color;
+
+  .valor-item {
+    display: flex;
+    flex-direction: column;
+    
+    .valor-label {
+      font-size: 0.9rem;
+      color: $light-text;
+      margin-bottom: 0.25rem;
+    }
+    
+    .valor-numero {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-color;
+    }
+    
+    &.bruto .valor-numero {
+      color: $primary-color;
+    }
+    
+    &.liquido .valor-numero {
+      color: $accent-color;
+      font-size: 1.75rem;
+    }
+  }
+}
+
+// Seções de detalhes
+.detalhes-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-lg;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .secao-detalhes {
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $primary-color;
+      margin: 0 0 $spacing-md 0;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid $border-color;
+    }
+    
+    .detalhe-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+      padding: $spacing-sm 0;
+      
+      &:not(:last-child) {
+        border-bottom: 1px dashed rgba($border-color, 0.5);
+      }
+      
+      .detalhe-label {
+        font-size: 0.9rem;
+        color: $text-color;
+        flex: 1;
+      }
+      
+      .detalhe-info {
+        font-size: 0.75rem;
+        color: $light-text;
+        margin-right: $spacing-sm;
+        flex-basis: 100%;
+        margin-top: 0.25rem;
+        
+        @media (min-width: 576px) {
+          flex-basis: auto;
+          margin-top: 0;
+        }
+      }
+      
+      .detalhe-valor {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-align: right;
+        
+        &.positivo {
+          color: $accent-color;
+        }
+        
+        &.negativo {
+          color: $error-color;
+        }
+      }
+      
+      &.total {
+        border-top: 1px solid $border-color;
+        margin-top: $spacing-sm;
+        padding-top: $spacing-md;
+        border-bottom: none;
+        
+        .detalhe-label {
+          font-weight: 600;
+        }
+        
+        .detalhe-valor {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}
+
+// Mensagem sem resultado
+.sem-resultado {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $light-text;
+  
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+// Animações
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

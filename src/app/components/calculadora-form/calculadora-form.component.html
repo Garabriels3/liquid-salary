@@ -1,1 +1,195 @@
-<p>calculadora-form works!</p>
+<div class="calculadora-container">
+  <!-- Abas de países -->
+  <div class="paises-tabs">
+    <button 
+      *ngFor="let paisOpcao of paises" 
+      [class.ativo]="pais === paisOpcao" 
+      (click)="selecionarPais(paisOpcao)" 
+      [disabled]="paisOpcao !== 'br' && paisOpcao !== 'pt' && paisOpcao !== 'de'">
+      {{ obterNomePais(paisOpcao) }}
+    </button>
+  </div>
+
+  <!-- Formulário -->
+  <div class="formulario-container">
+    <h2>Calculadora de Salário - {{ pais === 'br' ? 'Brasil' : 
+                                  pais === 'pt' ? 'Portugal' : 
+                                  pais === 'de' ? 'Alemanha' : 
+                                  pais === 'fr' ? 'França' : 
+                                  pais === 'ch' ? 'Suíça' : 
+                                  'Itália' }}</h2>
+    
+    <form [formGroup]="formulario" (ngSubmit)="calcular()" class="form-calculadora">
+      <!-- Campo de salário bruto (comum a todos os países) -->
+      <div class="form-grupo">
+        <label for="salarioBruto">{{ 'Salário Bruto' }}</label>
+        <div class="input-wrapper">
+          <span class="prefixo">{{ obterSimboloMoeda(pais) }}</span>
+          <input 
+            id="salarioBruto" 
+            type="number" 
+            formControlName="salarioBruto" 
+            placeholder="0.00" 
+            step="100"
+            [class.invalido]="formulario.get('salarioBruto')?.invalid && formulario.get('salarioBruto')?.touched">
+        </div>
+        <div class="mensagem-erro" *ngIf="formulario.get('salarioBruto')?.invalid && formulario.get('salarioBruto')?.touched">
+          {{ 'Salário bruto é obrigatório' }}
+        </div>
+      </div>
+      
+      <!-- Campos Brasil -->
+      <ng-container *ngIf="pais === 'br'">
+        <div class="form-grupo">
+          <label for="dependentes">{{ 'Dependentes' }}</label>
+          <input 
+            id="dependentes" 
+            type="number" 
+            formControlName="dependentes" 
+            min="0" 
+            placeholder="0">
+        </div>
+        
+        <div class="form-grupo opcoes-radio">
+          <label>{{ 'Vale Transporte' }}</label>
+          <div class="opcoes">
+            <label class="opcao">
+              <input type="radio" formControlName="valeTransporte" [value]="true">
+              <span>{{ 'Sim' }}</span>
+            </label>
+            <label class="opcao">
+              <input type="radio" formControlName="valeTransporte" [value]="false">
+              <span>{{ 'Não' }}</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-grupo">
+          <label for="valeRefeicao">{{ 'Vale Refeição' }}</label>
+          <div class="input-wrapper">
+            <span class="prefixo">{{ obterSimboloMoeda(pais) }}</span>
+            <input 
+              id="valeRefeicao" 
+              type="number"
+              formControlName="valeRefeicao" 
+              placeholder="0.00">
+          </div>
+        </div>
+        
+        <div class="form-grupo">
+          <label for="planoSaude">{{ 'Plano de Saúde' }}</label>
+          <div class="input-wrapper">
+            <span class="prefixo">{{ obterSimboloMoeda(pais) }}</span>
+            <input 
+              id="planoSaude" 
+              type="number"
+              formControlName="planoSaude" 
+              placeholder="0.00">
+          </div>
+        </div>
+        
+        <div class="form-grupo">
+          <label for="outrosBeneficios">{{ 'Outros Benefícios' }}</label>
+          <div class="input-wrapper">
+            <span class="prefixo">{{ obterSimboloMoeda(pais) }}</span>
+            <input 
+              id="outrosBeneficios" 
+              type="number"
+              formControlName="outrosBeneficios" 
+              placeholder="0.00">
+          </div>
+        </div>
+      </ng-container>
+      
+      <!-- Campos Portugal -->
+      <ng-container *ngIf="pais === 'pt'">
+        <div class="form-grupo">
+          <label for="dependentes">{{ 'Dependentes' }}</label>
+          <input 
+            id="dependentes" 
+            type="number" 
+            formControlName="dependentes" 
+            min="0" 
+            placeholder="0">
+        </div>
+        
+        <div class="form-grupo">
+          <label for="estadoCivil">{{ 'Estado Civil' }}</label>
+          <select id="estadoCivil" formControlName="estadoCivil">
+            <option value="solteiro">{{ 'Solteiro' }}</option>
+            <option value="casado">{{ 'Casado' }}</option>
+            <option value="uniao">{{ 'União de Facto' }}</option>
+          </select>
+        </div>
+        
+        <div class="form-grupo">
+          <label for="subsidioRefeicao">{{ 'Subsídio de Refeição' }}</label>
+          <div class="input-wrapper">
+            <span class="prefixo">{{ obterSimboloMoeda(pais) }}</span>
+            <input 
+              id="subsidioRefeicao" 
+              type="number"
+              formControlName="subsidioRefeicao" 
+              placeholder="0.00">
+          </div>
+        </div>
+      </ng-container>
+      
+      <!-- Campos Alemanha -->
+      <ng-container *ngIf="pais === 'de'">
+        <div class="form-grupo">
+          <label for="steuerklasse">{{ 'Steuerklasse (Classe Fiscal)' }}</label>
+          <select id="steuerklasse" formControlName="steuerklasse">
+            <option value="1">{{ 'Classe 1 - Solteiro' }}</option>
+            <option value="2">{{ 'Classe 2 - Solteiro com filhos' }}</option>
+            <option value="3">{{ 'Classe 3 - Casado (principal)' }}</option>
+            <option value="4">{{ 'Classe 4 - Casado (igual)' }}</option>
+            <option value="5">{{ 'Classe 5 - Casado (secundário)' }}</option>
+          </select>
+        </div>
+        
+        <div class="form-grupo opcoes-radio">
+          <label>{{ 'Tipo de Seguro de Saúde' }}</label>
+          <div class="opcoes">
+            <label class="opcao">
+              <input type="radio" formControlName="tipoSeguroSaude" value="publico">
+              <span>{{ 'Público' }}</span>
+            </label>
+            <label class="opcao">
+              <input type="radio" formControlName="tipoSeguroSaude" value="privado">
+              <span>{{ 'Privado' }}</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-grupo opcoes-radio">
+          <label>{{ 'Contribuição à Igreja' }}</label>
+          <div class="opcoes">
+            <label class="opcao">
+              <input type="radio" formControlName="kirchensteuer" [value]="true">
+              <span>{{ 'Sim' }}</span>
+            </label>
+            <label class="opcao">
+              <input type="radio" formControlName="kirchensteuer" [value]="false">
+              <span>{{ 'Não' }}</span>
+            </label>
+          </div>
+        </div>
+      </ng-container>
+      
+      <!-- Botão Calcular -->
+      <div class="form-grupo botao-grupo">
+        <button type="submit" class="btn-calcular" [disabled]="formulario.invalid">
+          {{ 'Calcular Salário' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Componente de Resultado -->
+  <app-resultado-calculo 
+    *ngIf="resultado" 
+    [resultado]="resultado" 
+    [pais]="pais">
+  </app-resultado-calculo>
+</div>

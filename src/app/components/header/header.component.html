@@ -1,1 +1,32 @@
-<p>header works!</p>
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/">
+          <span class="logo-text">Liquid Salary</span>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul class="nav-items">
+          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+          <li><a routerLink="/calculadora" routerLinkActive="active">Calculadora</a></li>
+          <li><a routerLink="/blog" routerLinkActive="active">Blog</a></li>
+        </ul>
+      </nav>
+      
+      <button class="menu-toggle" (click)="toggleMobileMenu()">
+        <span class="menu-icon"></span>
+      </button>
+    </div>
+    
+    <!-- Menu Móvel -->
+    <div class="mobile-menu" [class.active]="mobileMenuOpen">
+      <ul class="mobile-nav">
+        <li><a routerLink="/" (click)="closeMobileMenu()">Home</a></li>
+        <li><a routerLink="/calculadora" (click)="closeMobileMenu()">Calculadora</a></li>
+        <li><a routerLink="/blog" (click)="closeMobileMenu()">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
