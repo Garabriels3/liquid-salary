@@ -13,9 +13,9 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.07);
 $shadow-md: 0 5px 8px -1px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.08);
 $border-radius: 0.5rem;
 $spacing-sm: 0.5rem;
-$spacing-md: 0.75rem;
-$spacing-lg: 1.25rem;
-$spacing-xl: 1.75rem;
+$spacing-md: 0.65rem;
+$spacing-lg: 1rem;
+$spacing-xl: 1.5rem;
 
 // Animações
 @keyframes fadeInUp {
@@ -46,17 +46,17 @@ $spacing-xl: 1.75rem;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: $spacing-lg 0;
+  padding: $spacing-md 0;
   animation: fadeInUp 0.6s ease-out;
 }
 
 .resultado-principal {
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-md;
 
   .card-header {
     background-color: $primary-color;
     color: white;
-    padding: $spacing-md $spacing-lg;
+    padding: $spacing-sm $spacing-md;
     border-radius: $border-radius $border-radius 0 0;
     display: flex;
     justify-content: space-between;
@@ -64,7 +64,7 @@ $spacing-xl: 1.75rem;
 
     h2 {
       margin: 0;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 600;
     }
 
@@ -73,12 +73,12 @@ $spacing-xl: 1.75rem;
       align-items: center;
       gap: $spacing-sm;
       background-color: rgba(white, 0.15);
-      padding: 0.4rem 0.7rem;
+      padding: 0.35rem 0.6rem;
       border-radius: 2rem;
 
       .status-icon {
-        width: 0.75rem;
-        height: 0.75rem;
+        width: 0.7rem;
+        height: 0.7rem;
         border-radius: 50%;
         background-color: #ccc;
 
@@ -105,7 +105,7 @@ $spacing-xl: 1.75rem;
 
   .card-body {
     background-color: $card-background;
-    padding: $spacing-lg;
+    padding: $spacing-md;
     border-radius: 0 0 $border-radius $border-radius;
     border: 1px solid $border-color;
     border-top: none;
@@ -114,11 +114,11 @@ $spacing-xl: 1.75rem;
   .valores-principais {
     display: flex;
     flex-direction: column;
-    gap: $spacing-md;
+    gap: $spacing-sm;
   }
 
   .valor-item {
-    padding: $spacing-md;
+    padding: $spacing-sm;
     background-color: white;
     border-radius: $border-radius;
     box-shadow: $shadow-sm;
@@ -126,25 +126,25 @@ $spacing-xl: 1.75rem;
 
     &:hover {
       box-shadow: $shadow-md;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     .label {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: $light-text;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       display: block;
     }
 
     .valor {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: $text-color;
     }
 
     .taxa {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      font-size: 0.85rem;
       color: $secondary-color;
     }
 
@@ -180,7 +180,7 @@ $spacing-xl: 1.75rem;
       }
 
       .valor {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
     }
   }
@@ -188,7 +188,7 @@ $spacing-xl: 1.75rem;
   .separador {
     display: flex;
     align-items: center;
-    margin: $spacing-md 0;
+    margin: $spacing-sm 0;
     
     .linha {
       flex: 1;
@@ -197,9 +197,9 @@ $spacing-xl: 1.75rem;
     }
     
     .icon {
-      margin: 0 $spacing-md;
-      width: 32px;
-      height: 32px;
+      margin: 0 $spacing-sm;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -207,7 +207,7 @@ $spacing-xl: 1.75rem;
       background-color: $light-text;
       color: white;
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 }
@@ -216,7 +216,7 @@ $spacing-xl: 1.75rem;
 .detalhes-card, .beneficios-card {
   background-color: $card-background;
   border-radius: $border-radius;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-md;
   overflow: hidden;
   box-shadow: $shadow-sm;
   border: 1px solid $border-color;
@@ -227,26 +227,26 @@ $spacing-xl: 1.75rem;
   }
   
   .card-header {
-    padding: $spacing-sm $spacing-md;
+    padding: $spacing-sm $spacing-sm;
     background-color: $background-color;
     border-bottom: 1px solid $border-color;
     
     h3 {
       margin: 0;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 600;
       color: $primary-color;
     }
   }
   
   .card-body {
-    padding: $spacing-md;
+    padding: $spacing-sm;
   }
   
   .detalhes-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: $spacing-md;
+    gap: $spacing-sm;
     
     @media (min-width: 576px) {
       grid-template-columns: 1fr 1fr;
@@ -264,16 +264,16 @@ $spacing-xl: 1.75rem;
       border-bottom: none;
     }
     
-    .detalhe-nome {
+    .detalhe-label {
       font-weight: 500;
       color: $text-color;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
     
     .detalhe-valor {
       font-weight: 600;
       color: $primary-color;
-      font-size: 1.1rem;
+      font-size: 1rem;
       
       &.negativo {
         color: $error-color;
@@ -283,13 +283,19 @@ $spacing-xl: 1.75rem;
         color: $accent-color;
       }
     }
+    
+    .detalhe-info {
+      font-size: 0.8rem;
+      color: $light-text;
+      margin-top: 0.3rem;
+    }
   }
 }
 
 // Mensagem quando não há resultado
 .sem-resultado {
   text-align: center;
-  padding: $spacing-lg;
+  padding: $spacing-md;
   background-color: $card-background;
   border-radius: $border-radius;
   border: 1px dashed $border-color;
@@ -306,7 +312,7 @@ $spacing-xl: 1.75rem;
   .valores-principais {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-md !important;
+    gap: $spacing-sm !important;
     
     .valor-item.liquido {
       grid-column: 1 / -1;
@@ -331,11 +337,11 @@ $spacing-xl: 1.75rem;
     padding: $spacing-sm !important;
     
     .valor {
-      font-size: 1.4rem !important;
+      font-size: 1.3rem !important;
     }
     
     &.liquido .valor {
-      font-size: 1.8rem !important;
+      font-size: 1.6rem !important;
     }
   }
   
@@ -351,7 +357,7 @@ $spacing-xl: 1.75rem;
     .detalhe-item {
       padding: $spacing-sm;
       
-      .detalhe-nome, .detalhe-valor {
+      .detalhe-label, .detalhe-valor {
         font-size: 0.9rem;
       }
     }

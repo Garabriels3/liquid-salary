@@ -18,29 +18,29 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.07);  // Sombra mais visível
 $shadow-md: 0 5px 8px -1px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.08);  // Sombra mais visível
 $border-radius: 0.5rem;
 $spacing-sm: 0.5rem;
-$spacing-md: 0.75rem;    // Reduzido de 1rem
-$spacing-lg: 1.25rem;    // Reduzido de 1.5rem
-$spacing-xl: 1.75rem;    // Reduzido de 2.5rem
+$spacing-md: 0.65rem;    // Reduzido ainda mais
+$spacing-lg: 1rem;       // Reduzido
+$spacing-xl: 1.5rem;     // Reduzido
 
 // Container da calculadora
 .calculadora-container {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: $spacing-lg;
+  padding: $spacing-md;
 }
 
 // Abas de países
 .paises-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: $spacing-lg;  // Reduzido
+  gap: 0.5rem;
+  margin-bottom: $spacing-md;  // Reduzido
   justify-content: center;
   animation: fadeIn 0.5s ease-out;
   
   button {
-    padding: $spacing-sm $spacing-md;
+    padding: 0.4rem 0.65rem;
     background-color: transparent;
     border: 2px solid transparent;
     border-radius: $border-radius;
@@ -90,7 +90,7 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
 // Título do formulário
 .form-titulo {
   color: $primary-color;
-  margin-bottom: $spacing-lg;  // Reduzido
+  margin-bottom: $spacing-md;  // Reduzido
   font-size: 1.5rem;
   font-weight: 600;
   border-bottom: 1px solid $border-color;
@@ -101,39 +101,39 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
 .form-calculadora {
   display: grid;
   grid-template-columns: 1fr;
-  gap: $spacing-md;  // Reduzido
+  gap: $spacing-sm;  // Reduzido ainda mais
   
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    column-gap: $spacing-lg;  // Espaço horizontal entre colunas
-    row-gap: $spacing-md;     // Espaço vertical entre linhas
+    column-gap: $spacing-md;  // Espaço horizontal entre colunas
+    row-gap: $spacing-sm;     // Espaço vertical entre linhas reduzido
   }
 }
 
 // Campos do formulário
 .campo-formulario {
-  margin-bottom: $spacing-md;  // Reduzido
+  margin-bottom: $spacing-sm;  // Reduzido ainda mais
   
   label {
     display: block;
-    margin-bottom: $spacing-sm;  // Reduzido
+    margin-bottom: 0.3rem;  // Reduzido ainda mais
     font-weight: 500;
     color: $text-color;
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
   
   input[type="number"],
   input[type="text"],
   select {
     width: 100%;
-    padding: $spacing-sm $spacing-md;  // Ajustado
+    padding: 0.4rem 0.65rem;  // Reduzido
     border: 1px solid $border-color;
     border-radius: $border-radius;
     background-color: white;
     font-size: 1rem;
     color: $text-color;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    height: 2.5rem;  // Reduzido ligeiramente
+    height: 2.25rem;  // Reduzido
     
     &:focus {
       outline: none;
@@ -153,26 +153,26 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
   .campo-erro {
     color: $error-color;
     font-size: 0.85rem;
-    margin-top: $spacing-sm;
+    margin-top: 0.3rem;
     display: block;
   }
 }
 
 // Campos de radio buttons
 .campo-radio {
-  margin-bottom: $spacing-md;  // Reduzido
+  margin-bottom: $spacing-sm;  // Reduzido
   
   .titulo-campo {
     display: block;
-    margin-bottom: $spacing-sm;  // Reduzido
+    margin-bottom: 0.3rem;  // Reduzido
     font-weight: 500;
     color: $text-color;
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
   
   .opcoes-radio {
     display: flex;
-    gap: $spacing-md;  // Reduzido
+    gap: $spacing-md;  // Mantido
     
     .opcao {
       display: flex;
@@ -198,7 +198,7 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
 
 // Botão de calcular
 .botao-container {
-  margin-top: $spacing-lg;  // Reduzido
+  margin-top: $spacing-md;  // Reduzido
   text-align: center;
   grid-column: 1 / -1;
 }
@@ -207,14 +207,14 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
   background-color: $primary-color;
   color: white;
   border: none;
-  padding: $spacing-sm $spacing-lg;  // Reduzido
+  padding: 0.4rem $spacing-md;  // Reduzido
   border-radius: $border-radius;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 200px;
-  height: 2.75rem;  // Reduzido
+  height: 2.5rem;  // Reduzido
   
   &:hover:not(:disabled) {
     background-color: darken($primary-color, 10%);
@@ -233,7 +233,7 @@ $spacing-xl: 1.75rem;    // Reduzido de 2.5rem
 
 // Resultado
 .resultado-container {
-  margin-top: $spacing-lg;  // Reduzido
+  margin-top: $spacing-md;  // Reduzido
 }
 
 // Animações
