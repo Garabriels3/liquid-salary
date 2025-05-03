@@ -18,29 +18,29 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.07);  // Sombra mais visível
 $shadow-md: 0 5px 8px -1px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.08);  // Sombra mais visível
 $border-radius: 0.5rem;
 $spacing-sm: 0.5rem;
-$spacing-md: 1rem;
-$spacing-lg: 1.5rem;
-$spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
+$spacing-md: 0.75rem;    // Reduzido de 1rem
+$spacing-lg: 1.25rem;    // Reduzido de 1.5rem
+$spacing-xl: 1.75rem;    // Reduzido de 2.5rem
 
 // Container da calculadora
 .calculadora-container {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: $spacing-xl;
+  padding: $spacing-lg;
 }
 
 // Abas de países
 .paises-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;  // Aumentado para dar mais espaço entre os botões
-  margin-bottom: $spacing-xl;  // Aumentado
+  gap: 0.75rem;
+  margin-bottom: $spacing-lg;  // Reduzido
   justify-content: center;
   animation: fadeIn 0.5s ease-out;
   
   button {
-    padding: $spacing-md $spacing-lg;
+    padding: $spacing-sm $spacing-md;
     background-color: transparent;
     border: 2px solid transparent;
     border-radius: $border-radius;
@@ -75,12 +75,12 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 .formulario-container {
   background-color: $card-background;
   border-radius: $border-radius;
-  padding: $spacing-xl;
+  padding: $spacing-lg;  // Reduzido
   box-shadow: $shadow-sm;
   border: 1px solid $border-color;
   transition: box-shadow 0.3s ease;
   animation: fadeIn 0.5s ease-out;
-  margin-bottom: $spacing-xl;  // Adicionado espaço entre o formulário e o resultado
+  margin-bottom: $spacing-lg;  // Reduzido
   
   &:hover {
     box-shadow: $shadow-md;
@@ -90,50 +90,50 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 // Título do formulário
 .form-titulo {
   color: $primary-color;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;  // Reduzido
   font-size: 1.5rem;
   font-weight: 600;
   border-bottom: 1px solid $border-color;
-  padding-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
 }
 
 // Formulário
 .form-calculadora {
   display: grid;
   grid-template-columns: 1fr;
-  gap: $spacing-xl;  // Aumentado para criar mais espaço entre as linhas do grid
+  gap: $spacing-md;  // Reduzido
   
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    column-gap: $spacing-xl;  // Espaço horizontal entre colunas
-    row-gap: $spacing-xl;     // Espaço vertical entre linhas
+    column-gap: $spacing-lg;  // Espaço horizontal entre colunas
+    row-gap: $spacing-md;     // Espaço vertical entre linhas
   }
 }
 
 // Campos do formulário
 .campo-formulario {
-  margin-bottom: $spacing-xl;  // Aumentado para criar mais espaço entre campos
+  margin-bottom: $spacing-md;  // Reduzido
   
   label {
     display: block;
-    margin-bottom: $spacing-md;  // Aumentado o espaço entre label e input
+    margin-bottom: $spacing-sm;  // Reduzido
     font-weight: 500;
     color: $text-color;
-    font-size: 1.05rem;  // Ligeiramente maior para melhor legibilidade
+    font-size: 1.05rem;
   }
   
   input[type="number"],
   input[type="text"],
   select {
     width: 100%;
-    padding: $spacing-md;
+    padding: $spacing-sm $spacing-md;  // Ajustado
     border: 1px solid $border-color;
     border-radius: $border-radius;
     background-color: white;
     font-size: 1rem;
     color: $text-color;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    height: 2.75rem;  // Altura fixa para uniformidade
+    height: 2.5rem;  // Reduzido ligeiramente
     
     &:focus {
       outline: none;
@@ -160,20 +160,19 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 
 // Campos de radio buttons
 .campo-radio {
-  margin-bottom: $spacing-xl;  // Aumentado para criar mais espaço
+  margin-bottom: $spacing-md;  // Reduzido
   
   .titulo-campo {
     display: block;
-    margin-bottom: $spacing-md;  // Aumentado o espaço
+    margin-bottom: $spacing-sm;  // Reduzido
     font-weight: 500;
     color: $text-color;
-    font-size: 1.05rem;  // Consistente com os labels
+    font-size: 1.05rem;
   }
   
   .opcoes-radio {
     display: flex;
-    gap: $spacing-lg;  // Aumentado para dar mais espaço entre opções
-    padding: $spacing-sm 0;  // Adicionado padding vertical
+    gap: $spacing-md;  // Reduzido
     
     .opcao {
       display: flex;
@@ -181,7 +180,7 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
       
       input[type="radio"] {
         margin-right: $spacing-sm;
-        transform: scale(1.2);  // Levemente maior para ser mais visível
+        transform: scale(1.2);
       }
       
       label {
@@ -199,24 +198,23 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 
 // Botão de calcular
 .botao-container {
-  margin-top: $spacing-xl;  // Aumentado
+  margin-top: $spacing-lg;  // Reduzido
   text-align: center;
   grid-column: 1 / -1;
-  padding-top: $spacing-md;  // Adicionado para criar mais espaço antes do botão
 }
 
 .btn-calcular {
   background-color: $primary-color;
   color: white;
   border: none;
-  padding: $spacing-md $spacing-xl;
+  padding: $spacing-sm $spacing-lg;  // Reduzido
   border-radius: $border-radius;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 200px;
-  height: 3.25rem;  // Altura fixa para uniformidade
+  height: 2.75rem;  // Reduzido
   
   &:hover:not(:disabled) {
     background-color: darken($primary-color, 10%);
@@ -235,8 +233,7 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 
 // Resultado
 .resultado-container {
-  margin-top: $spacing-xl;
-  padding-top: $spacing-md;  // Adicionado para dar mais espaço
+  margin-top: $spacing-lg;  // Reduzido
 }
 
 // Animações
@@ -254,19 +251,19 @@ $spacing-xl: 2.5rem;  // Aumentado para criar mais espaço vertical
 // Para telas menores, ajustar o espaçamento
 @media (max-width: 576px) {
   .calculadora-container {
-    padding: $spacing-md;
+    padding: $spacing-sm;
   }
   
   .formulario-container {
-    padding: $spacing-lg;
+    padding: $spacing-md;
   }
   
   .form-calculadora {
-    gap: $spacing-lg;
+    gap: $spacing-sm;
   }
   
   .campo-formulario,
   .campo-radio {
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-sm;
   }
 }

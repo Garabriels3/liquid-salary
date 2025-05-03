@@ -24,3 +24,7 @@ export interface Salario {
   taxaEfetivaTotal?: number;
   detalhesAdicionais?: { [key: string]: any };
 }
+
+export interface Descontos {
+  [key: string]: number | undefined;
+}
