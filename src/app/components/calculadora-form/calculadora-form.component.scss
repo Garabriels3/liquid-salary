@@ -172,7 +172,7 @@ $spacing-xl: 1.5rem;     // Reduzido
   
   .opcoes-radio {
     display: flex;
-    gap: $spacing-md;  // Mantido
+    gap: 1rem;  // Aumentado para dar mais espaço entre os radio buttons
     
     .opcao {
       display: flex;
