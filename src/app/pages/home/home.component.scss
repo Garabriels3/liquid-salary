@@ -2,6 +2,10 @@
 
 // Adicionando a variável faltante
 $cor-titulo: $cor-texto;
+$spacing-sm: 0.75rem;
+$spacing-md: 1.25rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
 
 :host {
   display: block;
@@ -14,1023 +18,15 @@ $cor-titulo: $cor-texto;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: $spacing-xl $spacing-lg;
 }
 
 // ========== Hero Section Styles ========== //
-.hero-section {
-  background: linear-gradient(135deg, lighten($cor-primaria, 10%), darken($cor-primaria, 8%));
-  color: #ffffff;
-  padding: 4.5rem 2.5rem;
-  margin-bottom: 3.5rem; // Espaço antes do conteúdo da calculadora
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-
-  .hero-content {
-    margin-bottom: 2.5rem;
-    h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.97);
-      margin-bottom: 1.2rem;
-      text-shadow: 1px 1px 3px rgba(247, 245, 245, 0.15);
-      letter-spacing: -0.5px;
-    }
-    .subtitle {
-      font-size: 1.25rem;
-      color: rgba(255, 255, 255, 0.97);
-      max-width: 650px; // Limitar largura do subtítulo
-      margin: 0 auto; // Centralizar subtítulo
-      line-height: 1.6;
-    }
-  }
-}
-
-// ========== Country Tabs Styles ========== //
-.country-tabs {
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 1.2rem;
-  }
-
-  li {
-    margin: 0;
-  }
-
-  button {
-    background-color: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.92);
-    padding: 0.9rem 1.6rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border-radius: 8px 8px 0 0;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.18);
-      color: #ffffff;
-    }
-  }
-
-  li.active button {
-    color: #ffffff;
-    font-weight: 600;
-    background-color: rgba(255, 255, 255, 0.22);
-    border-bottom-color: #ffffff; // Linha branca indicando aba ativa
-  }
-}
-
-// ========== Calculator Content Styles ========== //
-.calculator-content {
-  // Estilos para a área que contém calculadora + resultados
-  display: grid;
-  // Layout de 2 colunas em telas maiores
-  @media (min-width: 992px) {
-    grid-template-columns: 1fr 1fr; // Ou ajuste as proporções (ex: 2fr 1fr)
-    gap: 3.5rem;
-    align-items: start; // Alinha itens no topo
-  }
-}
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4.5rem;
-}
-
-.calculator-section, .result-section, .info-section {
-  background-color: $cor-fundo-input; // Usar branco dos inputs
-  border-radius: 14px;
-  padding: 2.8rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba($cor-primaria, 0.06);
-}
-
-h2 {
-  font-size: 2rem;
-  color: $cor-primaria;
-  margin-bottom: 2.2rem;
-  border-bottom: 2px solid rgba($cor-primaria, 0.25);
-  padding-bottom: 0.6rem;
-}
-
-.form-group {
-  margin-bottom: 2.2rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.8rem;
-    font-weight: 600;
-    color: $cor-texto; // Usar cor de texto global
-    font-size: 1.1rem;
-  }
-
-  input {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid $cor-borda-input; // Usar cor de borda global
-    border-radius: 10px;
-    font-size: 1.1rem;
-    color: $cor-texto-input;
-    background-color: $cor-fundo-input;
-    transition: all 0.25s ease;
-
-    &:focus {
-      outline: none;
-      border-color: $cor-primaria; // Usar cor primária
-      box-shadow: 0 0 0 3px $cor-foco; // Usar cor de foco global
-    }
-
-    &.is-invalid {
-      border-color: $cor-alerta; // Vermelho para erro
-      box-shadow: 0 0 0 3px rgba($cor-alerta, 0.15); // Sombra vermelha suave no foco
-    }
-  }
-
-  // Estilo para a mensagem de erro
-  .error-message {
-    color: $cor-alerta; // Vermelho
-    font-size: 0.9rem;
-    margin-top: 0.6rem;
-    display: block; // Garante que ocupe espaço
-    font-weight: 500;
-  }
-
-  // Estilos específicos para Select (Dropdown)
-  select {
-    width: 100%;
-    padding: 1rem 3rem 1rem 1.2rem; // Padding maior na direita para a seta
-    border: 2px solid $cor-borda-input;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    background-color: $cor-fundo-input;
-    color: $cor-texto-input;
-    cursor: pointer;
-    transition: all 0.25s ease;
-
-    &:focus {
-      outline: none;
-      border-color: $cor-primaria;
-      box-shadow: 0 0 0 3px $cor-foco;
-    }
-
-    // Estilo para quando estiver desabilitado (se necessário)
-    &:disabled {
-      background-color: lighten($cor-secundaria, 32%);
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-  }
-}
-
-.info-tooltip {
-  position: relative;
-  cursor: help;
-  color: $cor-link; // Usar cor de link global
-  font-size: 1em;
-  margin-left: 5px;
-
-  .tooltip-text {
-    visibility: hidden;
-    width: 220px;
-    background-color: $cor-texto; // Usar cor de texto global (escura)
-    color: #ffffff; // Branco para texto sobre fundo escuro - melhor contraste
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -110px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 0.95rem;
-    font-weight: normal;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-    line-height: 1.5;
-  }
-
-  &:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
-button {
-  background-color: $cor-primaria; // Usar cor primária
-  color: #ffffff;
-  border: none;
-  padding: 1.2rem 2.5rem;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08); // Sombra mais sutil
-
-  &:hover {
-    background-color: darken($cor-primaria, 6%); // Usar darken da cor primária
-    transform: translateY(-2px);
-    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
-  }
-
-  &:active {
-    transform: translateY(1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-  }
-
-  &:disabled {
-    background-color: $cor-secundaria; // Usar cor secundária (cinza)
-    cursor: not-allowed;
-    transform: none;
-    opacity: 0.7;
-  }
-}
-
-.result-grid, .info-grid {
-  display: grid;
-  gap: 2.2rem;
-}
-
-.result-grid {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.result-item, .info-item {
-  background-color: lighten($cor-fundo, 3%); // Fundo levemente mais claro que o body
-  padding: 2.2rem;
-  border-radius: 14px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
-  border: 1px solid rgba($cor-borda-input, 0.7);
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.12);
-  }
-
-  h3 {
-    font-size: 1.4rem;
-    color: darken($cor-texto, 5%); // Texto mais escuro para melhor contraste 
-    margin-bottom: 1.2rem;
-    font-weight: 600;
-  }
-
-  p {
-    font-size: 1.9rem;
-    font-weight: bold;
-    color: $cor-primaria; // Destacar valor com cor primária
-    margin: 0;
-  }
-
-  small {
-    display: block;
-    margin-top: 0.85rem;
-    color: darken($cor-secundaria, 10%); // Escurecer cor secundária para melhor contraste
-    font-size: 1rem;
-  }
-
-  &.highlight {
-    background-color: $cor-primaria; // Usar cor primária
-    border: none;
-
-    h3, p {
-      color: #ffffff; // Texto branco sobre fundo primário
-    }
-
-    small {
-      color: rgba(255, 255, 255, 0.9); // Branco com leve transparência
-    }
-  }
-}
-
-.info-item {
-  background-color: $cor-fundo-input; // Manter fundo claro para itens de info
-  border: 1px solid $cor-borda-input; // Borda sutil
-
-  p {
-    font-size: 1.1rem;
-    font-weight: normal;
-    line-height: 1.8;
-    color: $cor-texto; // Cor de texto global
-  }
-}
-
-@media (max-width: 768px) {
-  .page-container {
-    padding: 2rem 1.2rem;
-  }
-
-  .calculator-section, .result-section, .info-section {
-    padding: 2.2rem 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-  }
-
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .result-item, .info-item {
-    padding: 1.8rem;
-  }
-  
-  .hero-section {
-    padding: 3.5rem 1.5rem;
-    
-    .hero-content h1 {
-      font-size: 2.2rem;
-    }
-    
-    .subtitle {
-      font-size: 1.1rem;
-    }
-  }
-}
-
-// Estilos adicionais para o Guia Financeiro
-
-.financial-guide {
-  margin-top: 4.5rem; // Espaço acima do guia
-
-  .guide-section {
-    margin-bottom: 3.5rem; // Espaço entre seções do guia
-    background-color: $cor-fundo-input;
-    border-radius: 14px;
-    padding: 2.5rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba($cor-borda-input, 0.8);
-  }
-
-  .section-title {
-    font-size: 1.9rem; // Reduzir um pouco o tamanho do título da seção do guia
-    color: $cor-primaria;
-    margin-bottom: 1.8rem;
-    border-bottom: 2px solid rgba($cor-primaria, 0.25);
-    padding-bottom: 0.8rem;
-  }
-
-  .sub-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: darken($cor-primaria, 12%);
-    margin-top: 2.2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .section-content p,
-  .pillar-item p,
-  .tip-item p {
-    line-height: 1.8;
-    color: $cor-texto;
-    margin-bottom: 1.2rem;
-    font-size: 1.05rem;
-  }
-
-  .section-conclusion {
-    font-style: italic;
-    color: darken($cor-secundaria, 15%); // Escurecido para melhor contraste
-    margin-top: 1.8rem;
-    border-top: 1px dashed $cor-borda-input;
-    padding-top: 1.8rem;
-  }
-
-  // Estilos para Tabelas
-  .styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.8rem;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
-    border-radius: 10px;
-    overflow: hidden; // Para aplicar border-radius nas bordas
-
-    th, td {
-      padding: 1.2rem 1.4rem;
-      text-align: left;
-      border-bottom: 1px solid $cor-borda-input;
-    }
-
-    th {
-      background-color: lighten($cor-primaria, 48%); // Fundo sutil para cabeçalho
-      font-weight: 600;
-      color: darken($cor-texto, 12%);
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: lighten($cor-fundo, 6%); // Listras zebradas sutis
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none; // Remover borda da última linha
-    }
-  }
-
-  // Estilos para Listas
-  .step-list,
-  .benefit-list,
-  .pillar-tips,
-  .tip-item ul {
-    list-style: none;
-    padding-left: 1.5rem; // Indentação
-    margin-top: 1.2rem;
-
-    li {
-      position: relative;
-      margin-bottom: 1rem;
-      padding-left: 1.8rem; // Espaço para o marcador
-      line-height: 1.7;
-
-      &::before {
-        content: "\2022"; // Marcador de círculo (bullet)
-        color: $cor-primaria;
-        font-weight: bold;
-        display: inline-block;
-        position: absolute;
-        left: 0;
-        font-size: 1.3em;
-      }
-    }
-  }
-
-  // Ajuste específico para listas com ícones
-  .benefit-list li,
-  .pillar-item li {
-    padding-left: 0; // Remover padding extra se já tem ícone/marcador customizado
-    &::before {
-      content: none; // Remover marcador padrão se tem ícone
-    }
-  }
-
-  .benefit-list .icon {
-    margin-right: 0.7rem;
-    font-size: 1.15em;
-    display: inline-block;
-    width: 22px; // Alinhar ícones
-    text-align: center;
-    color: $cor-primaria; // Cor primária para ícones
-  }
-
-  // Estilos para Pilares
-  .pillar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
-    margin-top: 2rem;
-  }
-
-  .pillar-item {
-    background-color: lighten($cor-fundo, 4%);
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid rgba($cor-borda-input, 0.8);
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
-
-    .pillar-icon {
-      font-size: 2.7rem;
-      display: block;
-      margin-bottom: 1.2rem;
-      color: $cor-primaria;
-    }
-
-    h4 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.2rem;
-      color: darken($cor-primaria, 8%);
-    }
-
-    ul {
-      text-align: left; // Alinhar texto das dicas à esquerda
-    }
-  }
-
-  // Estilos para Dicas Avançadas
-  .advanced-tips {
-    .tip-item {
-      background-color: lighten($cor-fundo, 5%);
-      padding: 1.8rem;
-      margin-bottom: 1.8rem;
-      border-radius: 10px;
-      border-left: 5px solid $cor-primaria;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
-
-      h4 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: darken($cor-texto, 5%); // Escurecido para melhor contraste
-      }
-    }
-  }
-}
-
-// Estilos responsivos adicionais
-@media (max-width: 576px) {
-  .financial-guide {
-    .guide-section {
-      padding: 1.8rem 1.5rem;
-    }
-    
-    .pillar-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .styled-table {
-      th, td {
-        padding: 0.9rem 1rem;
-        font-size: 0.95rem;
-      }
-    }
-  }
-}
-
-/* Seção de Artigos em Destaque */
-.featured-blog {
-  margin-top: 4.5rem;
-  padding-top: 3rem;
-  border-top: 1px solid $cor-highlight;
-  
-  .section-title {
-    font-size: 2.2rem;
-    color: $cor-primaria;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  .section-subtitle {
-    font-size: 1.1rem;
-    color: $cor-secundaria;
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 2.5rem;
-  }
-  
-  .featured-articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-    
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .featured-article {
-    background-color: $cor-fundo-input;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .article-image {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      
-      .image-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
-      }
-      
-      .article-category {
-        position: absolute;
-        bottom: 15px;
-        left: 15px;
-        background-color: $cor-primaria;
-        color: white;
-        padding: 0.3rem 0.7rem;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        z-index: 2;
-      }
-    }
-    
-    .article-content {
-      padding: 1.5rem;
-    }
-    
-    .article-title {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      line-height: 1.4;
-      
-      a {
-        color: $cor-texto;
-        text-decoration: none;
-        transition: color 0.2s ease;
-        
-        &:hover {
-          color: $cor-primaria;
-        }
-      }
-    }
-    
-    .article-excerpt {
-      color: $cor-secundaria;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
-    .article-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid $cor-highlight;
-      padding-top: 1rem;
-      
-      .article-date {
-        color: darken($cor-secundaria, 10%);
-        font-size: 0.9rem;
-      }
-      
-      .read-more {
-        color: $cor-primaria;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: color 0.2s ease;
-        
-        &:hover {
-          color: darken($cor-primaria, 10%);
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-  
-  .view-more {
-    text-align: center;
-    margin-bottom: 3rem;
-    
-    .view-all-link {
-      display: inline-block;
-      background-color: transparent;
-      color: $cor-primaria;
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 0.8rem 2rem;
-      border: 2px solid $cor-primaria;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        background-color: $cor-primaria;
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
-}
-
-/* Estilo para Seção de Artigo Completo */
-.full-article {
-  margin: 3rem 0;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  
-  h2 {
-    font-size: 2.2rem;
-    color: #333333;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-  }
-  
-  h3 {
-    font-size: 1.8rem;
-    color: #2c4b7c;
-    margin: 1.8rem 0 1rem;
-    font-weight: 600;
-  }
-  
-  h4 {
-    font-size: 1.5rem;
-    color: #2c4b7c;
-    margin: 1.5rem 0 0.8rem;
-    font-weight: 600;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #444444;
-    margin-bottom: 1.2rem;
-  }
-  
-  .article-meta {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    color: #777777;
-    font-size: 0.95rem;
-  }
-  
-  .article-content {
-    ul, ol {
-      padding-left: 1.5rem;
-      margin-bottom: 1.5rem;
-      
-      li {
-        margin-bottom: 0.5rem;
-        line-height: 1.6;
-        color: #444444;
-      }
-    }
-    
-    strong {
-      font-weight: 600;
-      color: #222222;
-    }
-  }
-  
-  .rates-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    
-    th, td {
-      padding: 0.8rem 1.2rem;
-      text-align: left;
-      border-bottom: 1px solid #e9e9e9;
-    }
-    
-    th {
-      background-color: #f5f8ff;
-      font-weight: 600;
-      color: #2c4b7c;
-    }
-    
-    tr:last-child td {
-      border-bottom: none;
-    }
-    
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  }
-  
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 2.5rem;
-    
-    .tag {
-      display: inline-block;
-      padding: 0.4rem 0.8rem;
-      background-color: #f0f5ff;
-      color: #2c4b7c;
-      border-radius: 2rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      
-      &:hover {
-        background-color: #e0ebff;
-      }
-    }
-  }
-}
-
-/* Estilo para Seção de FAQ */
-.faq-section {
-  margin: 4rem 0;
-  padding: 2rem;
-  background-color: #f8faff;
-  border-radius: 1rem;
-  
-  h2 {
-    font-size: 2.2rem;
-    color: #333333;
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-  }
-  
-  .faq-container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .faq-item {
-    margin-bottom: 1.2rem;
-    border-radius: 0.8rem;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    
-    .faq-question {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      
-      &:hover {
-        background-color: #f5f8ff;
-      }
-      
-      h3 {
-        font-size: 1.3rem;
-        margin: 0;
-        font-weight: 600;
-        color: #2c4b7c;
-      }
-      
-      .faq-toggle {
-        font-size: 1.8rem;
-        font-weight: 500;
-        color: #2c4b7c;
-        transition: transform 0.3s;
-      }
-    }
-    
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-      background-color: #fafbff;
-      
-      &.active {
-        max-height: 500px;
-        transition: max-height 0.5s ease-in;
-      }
-      
-      p {
-        padding: 1.5rem;
-        margin: 0;
-        line-height: 1.7;
-        color: #444444;
-      }
-    }
-  }
-}
-
-/* Estilo para Artigos em Destaque */
-.featured-articles {
-  margin: 4rem 0;
-  
-  h2 {
-    font-size: 2.2rem;
-    color: #333333;
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-  }
-  
-  .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  
-  .article-card {
-    background-color: $cor-fundo-input;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba($cor-primaria, 0.08);
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-    }
-    
-    img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    
-    h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #2c4b7c;
-      margin: 1.2rem 1.5rem 0.8rem;
-    }
-    
-    p {
-      font-size: 1rem;
-      color: #555555;
-      margin: 0 1.5rem 1.2rem;
-      line-height: 1.5;
-    }
-    
-    a {
-      display: inline-block;
-      margin: 0 1.5rem 1.5rem;
-      color: #3366cc;
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      
-      &:after {
-        content: '→';
-        margin-left: 0.5rem;
-        transition: transform 0.2s;
-      }
-      
-      &:hover:after {
-        transform: translateX(3px);
-      }
-    }
-  }
-}
-
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .full-article {
-    padding: 1.5rem;
-    
-    h2 {
-      font-size: 1.8rem;
-    }
-    
-    h3 {
-      font-size: 1.5rem;
-    }
-    
-    h4 {
-      font-size: 1.3rem;
-    }
-    
-    .rates-table {
-      font-size: 0.9rem;
-      
-      th, td {
-        padding: 0.6rem 0.8rem;
-      }
-    }
-  }
-  
-  .faq-section {
-    padding: 1.5rem;
-    
-    h2 {
-      font-size: 1.8rem;
-    }
-    
-    .faq-item .faq-question h3 {
-      font-size: 1.1rem;
-    }
-  }
-  
-  .featured-articles {
-    .articles-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-}
-
-// ========== Estilos Atualizados da Seção Hero ========== //
 .hero {
   background: linear-gradient(135deg, lighten($cor-primaria, 10%), darken($cor-primaria, 8%));
   color: #ffffff;
-  padding: 4.5rem 2.5rem;
-  margin-bottom: 3.5rem;
+  padding: $spacing-xl $spacing-lg;
+  margin-bottom: $spacing-xl;
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 10px 20px rgba(248, 247, 247, 0.07);
@@ -1043,7 +39,7 @@ button {
       font-size: 2.8rem;
       font-weight: 700;
       color: rgba(255, 255, 255, 0.97);
-      margin-bottom: 1.2rem;
+      margin-bottom: $spacing-md;
       text-shadow: 1px 1px 3px rgba(247, 245, 245, 0.15);
       letter-spacing: -0.5px;
     }
@@ -1063,34 +59,39 @@ button {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 $spacing-md;
 }
 
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 4.5rem;
+  gap: $spacing-xl;
+}
+
+// ========== Calculadora Section Styles ========== //
+.calculadora-section {
+  margin-bottom: $spacing-xl;
 }
 
 // ========== Artigos Relacionados Styles ========== //
 .artigos-relacionados {
-  margin: 4rem 0;
+  margin: $spacing-xl 0;
   width: 100%;
 
   h2 {
     font-size: 2rem;
     color: $cor-primaria;
-    margin-bottom: 2.2rem;
+    margin-bottom: $spacing-lg;
     border-bottom: 2px solid rgba($cor-primaria, 0.25);
-    padding-bottom: 0.6rem;
+    padding-bottom: $spacing-sm;
     text-align: center;
   }
 
   .artigos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: $spacing-lg;
+    margin-top: $spacing-lg;
     width: 100%;
   }
 
@@ -1137,23 +138,24 @@ button {
   }
 
   .artigo-conteudo {
-    padding: 1.5rem;
+    padding: $spacing-md;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    gap: $spacing-sm;
   }
 
   .artigo-data {
     font-size: 0.85rem;
     color: $cor-secundaria;
-    margin-bottom: 0.5rem;
+    margin-bottom: $spacing-sm;
     display: block;
   }
 
   h3 {
     font-size: 1.4rem;
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: $spacing-sm;
     color: $cor-texto;
     line-height: 1.3;
   }
@@ -1161,7 +163,7 @@ button {
   .artigo-resumo {
     color: $cor-secundaria;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: $spacing-md;
     flex-grow: 1;
     font-size: 1rem;
   }
@@ -1202,7 +204,7 @@ button {
   .artigo-texto {
     color: $cor-texto;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: $spacing-md;
     flex-grow: 1;
     overflow: auto;
     max-height: 600px; // Aumentado para mostrar mais conteúdo
@@ -1210,11 +212,11 @@ button {
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 1.5rem 0;
+      margin: $spacing-md 0;
       
       th, td {
         border: 1px solid $cor-borda-input;
-        padding: 0.8rem;
+        padding: $spacing-sm;
         text-align: left;
       }
       
@@ -1231,7 +233,7 @@ button {
     h2 {
       font-size: 1.3rem;
       color: $cor-primaria;
-      margin: 1.2rem 0 0.8rem;
+      margin: $spacing-md 0 $spacing-sm;
       padding-bottom: 0.4rem;
       border-bottom: 1px solid rgba($cor-primaria, 0.15);
       text-align: left;
@@ -1240,92 +242,47 @@ button {
     h3 {
       font-size: 1.1rem;
       color: $cor-texto;
-      margin: 1rem 0 0.6rem;
+      margin: $spacing-md 0 $spacing-sm;
     }
     
     p {
-      margin-bottom: 0.8rem;
+      margin-bottom: $spacing-sm;
       font-size: 0.95rem;
     }
     
     ul, ol {
-      margin-bottom: 1rem;
+      margin-bottom: $spacing-md;
       padding-left: 1.5rem;
       
       li {
-        margin-bottom: 0.4rem;
+        margin-bottom: $spacing-sm;
         font-size: 0.95rem;
       }
     }
-  }
-
-  .artigo-link {
-    display: inline-block;
-    color: $cor-primaria;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 0.5rem 0;
-    position: relative;
-    align-self: flex-start;
-    margin-top: auto;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: $cor-primaria;
-      transition: width 0.3s ease;
-    }
-    
-    &:hover::after {
-      width: 100%;
-    }
-  }
-}
-
-// Ajustes responsivos para diferentes tamanhos de tela
-@media (max-width: 1200px) {
-  .artigos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .artigos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-  }
-  
-  .artigo-texto {
-    max-height: 350px;
-  }
-}
-
-@media (max-width: 576px) {
-  .page-container {
-    padding: 2rem 1rem;
-  }
-  
-  .artigo-imagem {
-    height: 180px;
   }
 }
 
 // ========== FAQ Section Styles ========== //
 .faq-section {
-  margin: 4.5rem 0;
+  margin: $spacing-xl 0;
+  padding: $spacing-lg;
+  background-color: $cor-fundo-input;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
 
   h2 {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: $spacing-md;
+    font-size: 2rem;
+    color: $cor-primaria;
+    border-bottom: 2px solid rgba($cor-primaria, 0.25);
+    padding-bottom: $spacing-sm;
   }
 
   .faq-intro {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto 3rem;
+    margin: 0 auto $spacing-lg;
     color: $cor-secundaria;
     font-size: 1.1rem;
     line-height: 1.6;
@@ -1334,10 +291,12 @@ button {
   .faq-container {
     max-width: 800px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
   }
 
   .faq-item {
-    margin-bottom: 1rem;
     border: 1px solid rgba($cor-primaria, 0.1);
     border-radius: 10px;
     overflow: hidden;
@@ -1345,7 +304,7 @@ button {
 
   .faq-pergunta {
     background-color: $cor-fundo-input;
-    padding: 1.2rem 1.5rem;
+    padding: $spacing-md;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -1383,7 +342,7 @@ button {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
-    padding: 0 1.5rem;
+    padding: 0 $spacing-md;
     background-color: $cor-fundo-input;
     
     p {
@@ -1394,7 +353,7 @@ button {
     
     &.ativo {
       max-height: 500px;
-      padding: 1.5rem;
+      padding: $spacing-md;
     }
   }
 }
@@ -1403,8 +362,8 @@ button {
 .sobre-section {
   background-color: $cor-fundo-input;
   border-radius: 12px;
-  padding: 2.5rem;
-  margin: 4rem 0;
+  padding: $spacing-lg;
+  margin: $spacing-xl 0;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba($cor-primaria, 0.06);
 
@@ -1412,12 +371,14 @@ button {
     margin-top: 0;
     text-align: center;
     border-bottom: none;
-    margin-bottom: 1.5rem;
+    margin-bottom: $spacing-md;
+    font-size: 2rem;
+    color: $cor-primaria;
   }
 
   p {
     line-height: 1.7;
-    margin-bottom: 1.2rem;
+    margin-bottom: $spacing-md;
     color: $cor-texto;
     font-size: 1.05rem;
 
@@ -1429,89 +390,82 @@ button {
   .atualizacao {
     font-size: 0.9rem;
     color: $cor-secundaria;
-    margin-top: 2rem;
+    margin-top: $spacing-lg;
     text-align: right;
     font-style: italic;
   }
 }
 
-.artigos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+// Animações
+@keyframes fadeInExpand {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 600px;
+  }
+}
+
+// Ajustes responsivos para diferentes tamanhos de tela
+@media (max-width: 1200px) {
+  .artigos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: $spacing-lg $spacing-md;
+  }
   
-  .artigo-card {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: all 0.3s ease-in-out;
-    height: auto;
+  .hero {
+    padding: $spacing-lg $spacing-md;
     
-    &.expandido {
-      grid-column: 1 / -1;
-      scroll-margin-top: 20px;
-      
-      @media (min-width: 992px) {
-        .artigo-conteudo {
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        
-        .artigo-imagem {
-          height: 300px;
-        }
-      }
-      
-      .artigo-texto {
-        animation: fadeInExpand 0.5s ease-in-out;
-        max-height: 600px;
-        overflow-y: auto;
-        padding-right: 10px;
-        
-        h2, h3 {
-          margin-top: 1.5rem;
-          margin-bottom: 1rem;
-          color: var(--cor-texto-escuro);
-        }
-        
-        p {
-          margin-bottom: 1rem;
-          line-height: 1.6;
-        }
-        
-        ul, ol {
-          margin-bottom: 1rem;
-          padding-left: 2rem;
-          
-          li {
-            margin-bottom: 0.5rem;
-          }
-        }
-        
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 1.5rem 0;
-          
-          th, td {
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            text-align: left;
-          }
-          
-          th {
-            background-color: var(--cor-secundaria-clara);
-            color: var(--cor-texto-escuro);
-            font-weight: 600;
-          }
-          
-          tr:nth-child(even) {
-            background-color: #f9f9f9;
-          }
-        }
-      }
+    h1 {
+      font-size: 2.2rem;
     }
+    
+    .subtitle {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .artigos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    gap: $spacing-md;
+  }
+  
+  .artigo-texto {
+    max-height: 350px;
+  }
+  
+  .faq-section, .sobre-section {
+    padding: $spacing-md;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-container {
+    padding: $spacing-md;
+  }
+  
+  .hero {
+    padding: $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .artigo-imagem {
+    height: 180px;
+  }
+  
+  .artigo-conteudo {
+    padding: $spacing-sm;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: $spacing-md;
   }
 }

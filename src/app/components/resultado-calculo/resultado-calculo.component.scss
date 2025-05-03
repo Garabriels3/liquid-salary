@@ -14,8 +14,8 @@ $shadow-md: 0 5px 8px -1px rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.0
 $border-radius: 0.5rem;
 $spacing-sm: 0.5rem;
 $spacing-md: 1rem;
-$spacing-lg: 1.5rem;
-$spacing-xl: 2rem;
+$spacing-lg: 1.8rem;
+$spacing-xl: 2.5rem;
 
 // Animações
 @keyframes fadeInUp {
@@ -46,7 +46,7 @@ $spacing-xl: 2rem;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: $spacing-lg 0;
+  padding: $spacing-xl 0;
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -64,7 +64,7 @@ $spacing-xl: 2rem;
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 600;
     }
 
@@ -114,7 +114,7 @@ $spacing-xl: 2rem;
   .valores-principais {
     display: flex;
     flex-direction: column;
-    gap: $spacing-md;
+    gap: $spacing-lg;
   }
 
   .valor-item {
@@ -130,47 +130,47 @@ $spacing-xl: 2rem;
     }
 
     .label {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: $light-text;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       display: block;
     }
 
     .valor {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 600;
       color: $text-color;
     }
 
     .taxa {
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
       color: $secondary-color;
     }
 
     &.bruto {
-      border-left: 3px solid $primary-color;
+      border-left: 4px solid $primary-color;
       .valor {
         color: $primary-color;
       }
     }
 
     &.descontos {
-      border-left: 3px solid $error-color;
+      border-left: 4px solid $error-color;
       .valor {
         color: $error-color;
       }
     }
 
     &.beneficios {
-      border-left: 3px solid $accent-color;
+      border-left: 4px solid $accent-color;
       .valor {
         color: $accent-color;
       }
     }
 
     &.liquido {
-      border-left: 3px solid $accent-color;
+      border-left: 4px solid $accent-color;
       background-color: $accent-color;
       color: white;
       animation: pulseHighlight 2s infinite;
@@ -180,7 +180,7 @@ $spacing-xl: 2rem;
       }
 
       .valor {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
     }
   }
@@ -188,18 +188,18 @@ $spacing-xl: 2rem;
   .separador {
     display: flex;
     align-items: center;
-    margin: $spacing-sm 0;
+    margin: $spacing-md 0;
     
     .linha {
       flex: 1;
-      height: 1px;
+      height: 2px;
       background-color: $border-color;
     }
     
     .icon {
       margin: 0 $spacing-md;
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -207,6 +207,7 @@ $spacing-xl: 2rem;
       background-color: $light-text;
       color: white;
       font-weight: bold;
+      font-size: 1.2rem;
     }
   }
 }
@@ -215,7 +216,7 @@ $spacing-xl: 2rem;
 .detalhes-card, .beneficios-card {
   background-color: $card-background;
   border-radius: $border-radius;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-xl;
   overflow: hidden;
   box-shadow: $shadow-sm;
   border: 1px solid $border-color;
@@ -232,7 +233,7 @@ $spacing-xl: 2rem;
     
     h3 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: $primary-color;
     }
@@ -245,40 +246,42 @@ $spacing-xl: 2rem;
   .detalhes-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: $spacing-md;
+    gap: $spacing-lg;
     
     @media (min-width: 576px) {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: 1fr 1fr;
     }
   }
   
   .detalhe-item {
     padding: $spacing-md;
-    background-color: white;
-    border-radius: $border-radius;
-    box-shadow: $shadow-sm;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
-    &:hover {
-      box-shadow: $shadow-md;
-      transform: translateY(-2px);
+    &:last-child {
+      border-bottom: none;
     }
     
-    .detalhe-label {
-      font-size: 0.9rem;
-      color: $light-text;
-      margin-bottom: 0.5rem;
+    .detalhe-nome {
+      font-weight: 500;
+      color: $text-color;
+      font-size: 1rem;
     }
     
     .detalhe-valor {
-      font-size: 1.2rem;
       font-weight: 600;
       color: $primary-color;
-    }
-    
-    .detalhe-info {
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
-      color: $secondary-color;
+      font-size: 1.1rem;
+      
+      &.negativo {
+        color: $error-color;
+      }
+      
+      &.positivo {
+        color: $accent-color;
+      }
     }
   }
 }
@@ -301,16 +304,12 @@ $spacing-xl: 2rem;
 // Responsividade
 @media (min-width: 768px) {
   .valores-principais {
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-    .valor-item {
-      flex: 1 1 calc(50% - #{$spacing-md});
-      min-width: 200px;
-    }
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md !important;
     
     .valor-item.liquido {
-      flex-basis: 100%;
+      grid-column: 1 / -1;
     }
   }
 }
@@ -320,21 +319,40 @@ $spacing-xl: 2rem;
     .card-header {
       flex-direction: column;
       align-items: flex-start;
+      gap: $spacing-sm;
       
       .card-status {
-        margin-top: $spacing-sm;
+        align-self: flex-end;
       }
     }
+  }
+  
+  .valor-item {
+    padding: $spacing-md !important;
     
-    .valor-item {
+    .valor {
+      font-size: 1.4rem !important;
+    }
+    
+    &.liquido .valor {
+      font-size: 1.8rem !important;
+    }
+  }
+  
+  .detalhes-card, .beneficios-card {
+    .card-header h3 {
+      font-size: 1.1rem;
+    }
+    
+    .card-body {
       padding: $spacing-md;
+    }
+    
+    .detalhe-item {
+      padding: $spacing-sm;
       
-      .valor {
-        font-size: 1.3rem;
-      }
-      
-      &.liquido .valor {
-        font-size: 1.7rem;
+      .detalhe-nome, .detalhe-valor {
+        font-size: 0.9rem;
       }
     }
   }
